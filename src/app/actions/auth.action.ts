@@ -2,9 +2,15 @@
 
 import catchError from "http-errors"
 
-import {ChangeUserPassword, EditUserProfile, LoginUser, SignupUser} from "@/validations/auth.validation";
 import {
-    deleteCookie,
+    ChangeUserPassword,
+    ChangeUserRole,
+    EditUserProfile,
+    LoginUser,
+    SignupUser
+} from "@/validations/auth.validation";
+import {
+    deleteCookie, deleteCookieObj,
     findUserByEmail, fromUserToUserResponse,
     generateTokenAndSignInUser,
     isCorrectPassword,
@@ -154,9 +160,9 @@ export async function logoutUser(){
         await revokedTokensByUserId(tokenObj.userId);
 
         //----> Delete all tokens and user-session.
-        await deleteCookie(CookieParam.accessTokenName);
-        await deleteCookie(CookieParam.refreshTokenName);
-        await deleteCookie(CookieParam.sessionTokenName);
+        await deleteCookieObj(CookieParam.accessTokenName, CookieParam.accessTokenPath)
+        await deleteCookieObj(CookieParam.refreshTokenName, CookieParam.refreshTokenPath)
+        await deleteCookieObj(CookieParam.sessionTokenName, CookieParam.sessionTokenPath)
 
         //----> Send back response.
         return new ResponseMessage("Logged out is successful!", "success", StatusCodes.OK);
@@ -216,5 +222,35 @@ export async function signupUser(signup: SignupUser){
     }catch(error){
         return makeCustomError(error);
     }
+}
+
+export async function changeUserRole(changeRoleOfUser: ChangeUserRole){
+    try {
+        //----> Only admin can change role of user.
+        const {isAdmin} = await getSession();
+
+        //----> Check for admin privilege.
+        if (!isAdmin) {
+            throw catchError(StatusCodes.FORBIDDEN, "You don't have permission to change User Role!");
+        }
+
+        //----> Destructure the change-user-role payload.
+        const {email, role} = changeRoleOfUser;
+
+        //----> Check for existence of user.
+        const user = await findUserByEmail(email);
+
+
+        //----> Change the user role.
+        await prisma.user.update({where:{email},
+            data: {...user, role}
+        });
+
+        //----> Send back response.
+        return new ResponseMessage("Role has been changed successfully!", "success", StatusCodes.OK);
+    }catch(error){
+        return makeCustomError(error);
+    }
+
 }
 

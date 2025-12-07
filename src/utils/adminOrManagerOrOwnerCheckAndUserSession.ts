@@ -17,10 +17,10 @@ export async function adminOrManagerOrOwnerCheckAndUserSession() {
     //----> Checks for admin or manager privilege.
     const isAdminOrManager = () => isManager || isAdmin;
 
-    //----> Checks for admin or same user.
-    const ownerCheckOrAdmin = (idFromResource: string) => {
+    //----> Checks for admin or same user by userId.
+    const ownerCheckByUserIdOrAdmin = (idFromResource: string) => {
         //----> Check for owner (same user), when id of login user is equal to userId on resource.
-        const isSameUser = idFromResource === session.id;
+        const isSameUser = idFromResource.normalize() === (session.id).normalize();
 
         console.log("In adminOrManagerCheckAndInfo, isManager : ", isSameUser);
 
@@ -28,5 +28,16 @@ export async function adminOrManagerOrOwnerCheckAndUserSession() {
         return isSameUser || isAdmin;
     }
 
-    return {isAdmin, isAdminOrManager, isManager, ownerCheckOrAdmin, session};
+    //----> Checks for admin or same user by userId.
+    const ownerCheckByEmailOrAdmin = (email: string) => {
+        //----> Check for owner (same user), when id of login user is equal to userId on resource.
+        const isSameUser = email.normalize() === (session.email).normalize();
+
+        console.log("In adminOrManagerCheckAndInfo, isManager : ", isSameUser);
+
+        //----> Either same user or admin.
+        return isSameUser || isAdmin;
+    }
+
+    return {isAdmin, isAdminOrManager, isManager, ownerCheckByUserIdOrAdmin, ownerCheckByEmailOrAdmin, session};
 }

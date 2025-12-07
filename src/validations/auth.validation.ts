@@ -47,4 +47,11 @@ export const editProfileUserSchema = z.object({
     password: z.string().min(1, { message: "Password cannot be empty." }),
 });
 
+export const changeUserRoleSchema = z.object({
+    email: z.string().min(1, { message: "Email cannot be empty." }),
+    role: z.enum(['Admin', 'Manager', 'User']),
+});
+
+export type ChangeUserRole = z.infer<typeof changeUserRoleSchema>
+
 export type EditUserProfile = z.infer<typeof editProfileUserSchema>

@@ -9,10 +9,10 @@ import {getOneCustomer} from "@/app/actions/customer-helper";
 
 export async function createCustomer(customer: Customer) {
     try{
-        const {isAdminOrManager, session} = await adminOrManagerOrOwnerCheckAndUserSession()
+        const {isAdminOrManager, session} = await adminOrManagerOrOwnerCheckAndUserSession();
 
         //----> You must be an admin or manager to create a customer.
-        if (!isAdminOrManager) {
+        if (!isAdminOrManager()) {
             throw catchError(StatusCodes.FORBIDDEN, "You don't have the permission to create a customer!");
         }
 
@@ -30,12 +30,12 @@ export async function createCustomer(customer: Customer) {
 
 }
 
-export async function deleteCustomerId(id: string) {
+export async function deleteCustomerById(id: string) {
     try {
         const {isAdminOrManager} = await adminOrManagerOrOwnerCheckAndUserSession()
 
         //----> You must be an admin or manager to delete a customer.
-        if (!isAdminOrManager){
+        if (!isAdminOrManager()){
             throw catchError(StatusCodes.FORBIDDEN, "You don't have the permission to delete this resource!");
         }
 
@@ -60,7 +60,7 @@ export async function editCustomerById(id: string, customer: Customer) {
         const {isAdminOrManager} = await adminOrManagerOrOwnerCheckAndUserSession()
 
         //----> You must be an admin or manager to edit this resource.
-        if (!isAdminOrManager){
+        if (!isAdminOrManager()){
             throw catchError(StatusCodes.FORBIDDEN, "You don't have the permission to edit this resource!");
         }
 
@@ -70,7 +70,7 @@ export async function editCustomerById(id: string, customer: Customer) {
         //----> Edit the customer with the given id.
         await prisma.customer.update({
             where: {id},
-            data: {...customer, email: customer.email}
+            data: {...customer}
         });
 
         //----> Send back response.
@@ -85,7 +85,7 @@ export async function getCustomerById(id: string) {
         const {isAdminOrManager} = await adminOrManagerOrOwnerCheckAndUserSession()
 
         //----> You must be an admin or manager to view this page.
-        if (!isAdminOrManager){
+        if (!isAdminOrManager()){
             throw catchError(StatusCodes.FORBIDDEN, "You don't have the permission to view this page!");
         }
 
@@ -102,7 +102,7 @@ export async function getAllCustomers() {
         const {isAdminOrManager} = await adminOrManagerOrOwnerCheckAndUserSession();
 
         //----> You must be an admin or manager to view this page.
-        if (!isAdminOrManager){
+        if (!isAdminOrManager()){
             throw catchError(StatusCodes.FORBIDDEN, "You don't have the permission to view this page!");
         }
 

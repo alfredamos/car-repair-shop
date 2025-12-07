@@ -13,7 +13,7 @@ import {setSession} from "@/utils/setSession";
 import {makeSession} from "@/utils/makeSession";
 
 export function isPasswordMatch(passwordOne: string, passwordTwo: string) : boolean {
-    return passwordOne === passwordTwo;
+    return passwordOne.normalize() === passwordTwo.normalize();
 }
 
 export function isCorrectPassword(rawPassword: string, encodedPassword: string) : Promise<boolean> {
@@ -95,4 +95,16 @@ export function fromUserToUserResponse(user: User): UserResponse{
         image: user.image,
         role: user.role,
     }
+}
+
+export async function deleteCookieObj(cookieName: string, cookiePath: string){
+    const cookieStore = await cookies();
+
+    cookieStore.set(cookieName, "", {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "lax",
+        path: cookiePath,
+        maxAge:0
+    })
 }

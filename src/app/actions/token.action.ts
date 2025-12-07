@@ -28,10 +28,10 @@ export async function createToken(token: Token){
 
 export async function deleteInvalidTokensByUserId(userId: string){
     try{
-        const {ownerCheckOrAdmin} = await adminOrManagerOrOwnerCheckAndUserSession();
+        const {ownerCheckByUserIdOrAdmin} = await adminOrManagerOrOwnerCheckAndUserSession();
 
         //----> Check for ownership or admin.
-        if (!ownerCheckOrAdmin(userId)){
+        if (!ownerCheckByUserIdOrAdmin(userId)){
             throw new CustomError("Forbidden", "You don't have permission to view or perform any action on this page!", StatusCodes.FORBIDDEN)
         }
 

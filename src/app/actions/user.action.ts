@@ -11,10 +11,10 @@ import {adminOrManagerOrOwnerCheckAndUserSession} from "@/utils/adminOrManagerOr
 
 export async function deleteUserById(id: string){
     try{
-        const {ownerCheckOrAdmin} = await adminOrManagerOrOwnerCheckAndUserSession();
+        const {ownerCheckByUserIdOrAdmin} = await adminOrManagerOrOwnerCheckAndUserSession();
 
         //----> Check for ownership or admin.
-        if (!ownerCheckOrAdmin(id)){
+        if (!ownerCheckByUserIdOrAdmin(id)){
             throw catchError(StatusCodes.FORBIDDEN, "You are not permitted to perform this action!");
         }
 
@@ -36,10 +36,10 @@ export async function deleteUserById(id: string){
 
 export async function getUserById(id: string){
     try{
-        const {ownerCheckOrAdmin} = await adminOrManagerOrOwnerCheckAndUserSession();
+        const {ownerCheckByUserIdOrAdmin} = await adminOrManagerOrOwnerCheckAndUserSession();
 
         //----> Check for ownership or admin.
-        if (!ownerCheckOrAdmin(id)){
+        if (!ownerCheckByUserIdOrAdmin(id)){
             throw catchError(StatusCodes.FORBIDDEN, "You are not permitted to perform this action!");
         }
 

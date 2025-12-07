@@ -12,7 +12,7 @@ export async function createTicket(ticket: Ticket) {
         const {isAdminOrManager} = await adminOrManagerOrOwnerCheckAndUserSession()
 
         //----> You must be an admin or manager to create a ticket.
-        if (!isAdminOrManager) {
+        if (!isAdminOrManager()) {
             throw catchError(StatusCodes.FORBIDDEN, "You don't have the permission to create a ticket!");
         }
 
@@ -29,12 +29,12 @@ export async function createTicket(ticket: Ticket) {
 
 }
 
-export async function deleteTicketId(id: string) {
+export async function deleteTicketById(id: string) {
     try {
         const {isAdminOrManager} = await adminOrManagerOrOwnerCheckAndUserSession()
 
         //----> You must be an admin or manager to delete a ticket.
-        if (!isAdminOrManager){
+        if (!isAdminOrManager()){
             throw catchError(StatusCodes.FORBIDDEN, "You don't have the permission to delete this resource!");
         }
 
@@ -56,10 +56,10 @@ export async function deleteTicketId(id: string) {
 
 export async function editTicketById(id: string, ticket: Ticket) {
     try {
-        const {isAdminOrManager} = await adminOrManagerOrOwnerCheckAndUserSession()
+        const {isAdminOrManager, ownerCheckByEmailOrAdmin} = await adminOrManagerOrOwnerCheckAndUserSession()
 
         //----> You must be an admin or manager to edit this resource.
-        if (!isAdminOrManager){
+        if (!isAdminOrManager() && !ownerCheckByEmailOrAdmin(ticket.tech)){
             throw catchError(StatusCodes.FORBIDDEN, "You don't have the permission to edit this resource!");
         }
 
@@ -73,7 +73,7 @@ export async function editTicketById(id: string, ticket: Ticket) {
         });
 
         //----> Send back response.
-        return new ResponseMessage("Ticket deleted successfully.", "success", StatusCodes.OK);
+        return new ResponseMessage("Ticket edited successfully.", "success", StatusCodes.OK);
     }catch(error){
         return makeCustomError(error);
     }
@@ -81,14 +81,17 @@ export async function editTicketById(id: string, ticket: Ticket) {
 
 export async function getTicketById(id: string) {
     try {
-        const {isAdminOrManager} = await adminOrManagerOrOwnerCheckAndUserSession()
+        const {isAdminOrManager, ownerCheckByEmailOrAdmin} = await adminOrManagerOrOwnerCheckAndUserSession();
+
+        //----> Fetch the ticket with the given id.
+        const ticket = await getOneTicket(id);
 
         //----> You must be an admin or manager to view this page.
-        if (!isAdminOrManager){
+        if (!isAdminOrManager() && !ownerCheckByEmailOrAdmin(ticket.tech)){
             throw catchError(StatusCodes.FORBIDDEN, "You don't have the permission to view this page!");
         }
 
-        //----> Check for existence of ticket.
+        //----> Send back response.
         return await getOneTicket(id);
 
     }catch(error){
@@ -101,7 +104,7 @@ export async function getAllTickets() {
         const {isAdminOrManager} = await adminOrManagerOrOwnerCheckAndUserSession();
 
         //----> You must be an admin or manager to view this page.
-        if (!isAdminOrManager){
+        if (!isAdminOrManager()){
             throw catchError(StatusCodes.FORBIDDEN, "You don't have the permission to view this page!");
         }
 
@@ -110,4 +113,42 @@ export async function getAllTickets() {
     }catch (error) {
         return makeCustomError(error);
     }
+}
+
+export async function getAllTicketsByEmail(email: string) {
+    try {
+        const {ownerCheckByEmailOrAdmin} = await adminOrManagerOrOwnerCheckAndUserSession();
+
+        //----> You must be an admin or manager to view this page.
+        if (!ownerCheckByEmailOrAdmin(email)){
+            throw catchError(StatusCodes.FORBIDDEN, "You don't have the permission to view this page!");
+        }
+
+        //----> Fetch all tickets.
+        return await prisma.ticket.findMany({where: {tech: email}})
+    }catch (error) {
+        return makeCustomError(error);
+    }
+}
+
+export async function ticketJobCompleted(id: string) {
+    try {
+        //----> Fetch the ticket with the given id.
+        const ticket = await getOneTicket(id);
+
+        //----> Update the completed field.
+        ticket.completed = !ticket.completed;
+
+        //----> Save the changes in the database.
+        const updatedTicket = await prisma.ticket.update({
+            where: {id},
+            data: {...ticket}
+        });
+
+        //----> Send back the response.
+        return updatedTicket;
+    }catch(error){
+        return makeCustomError(error);
+    }
+
 }
