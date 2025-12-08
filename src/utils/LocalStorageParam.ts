@@ -1,3 +1,3 @@
 export class LocalStorageParam {
-    static userResp: string = "userResp";
+    static authSession: string = "authSession";
 }

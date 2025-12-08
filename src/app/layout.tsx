@@ -3,6 +3,7 @@ import "./globals.css";
 import {ThemeProvider} from "next-themes";
 import {ReactNode} from "react";
 import {NavBar} from "@/components/NavBar";
+import {AuthContext} from "@/app/helpers/AuthContext";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -15,19 +16,21 @@ export default function RootLayout({
   children: ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning={true}>
       <body
         className="bg-black min-h-screen text-black dark:text-white"
       >
-      <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-      >
-        <NavBar/>
-        {children}
-      </ThemeProvider>
+      <AuthContext>
+        <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+        >
+            <NavBar/>
+            {children}
+        </ThemeProvider>
+      </AuthContext>
       </body>
     </html>
   );

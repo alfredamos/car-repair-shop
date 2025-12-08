@@ -8,12 +8,31 @@ import {LoginUser, loginUserSchema} from "@/validations/auth.validation";
 import {loginUser} from "@/app/actions/auth.action";
 import {Button} from "@/components/ui/button";
 import {redirect} from "next/navigation";
+import {CustomError} from "@/utils/customError.util";
+import {useAuthContext} from "@/hooks/useAuthContext";
+import {useLocalStorage} from "@/hooks/useLocalStorage";
+import {UserResponse} from "@/app/types/type";
+import {LocalStorageParam} from "@/utils/LocalStorageParam";
 
 export default function LoginForm(){
+    const {setAuthSession} = useAuthContext();
+    const {setLocalStorage} = useLocalStorage<UserResponse>()
 
     async function onSubmit(values: LoginUser) {
         console.log("Form submitted with values:", values);
-        await loginUser(values);
+        const response = await loginUser(values);
+
+        if (response instanceof CustomError) {
+            throw response;
+        }
+
+        //----> Set auth context.
+        setAuthSession(response);
+
+        //----> Set local-storage.
+        setLocalStorage(LocalStorageParam.authSession, response as unknown as UserResponse);
+
+
         redirect("/")
     }
 
@@ -31,7 +50,7 @@ export default function LoginForm(){
         <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="bg-white text-slate-800 max-w-sm items-center mx-auto rounded-xl shadow-2xl p-10 mt-10">
                 <h4 className="font-bold text-slate-800 text-center text-2xl mb-6">
-                    Change Password Form
+                    Login Form
                 </h4>
                 <InputWithLabel<LoginUser> fieldTitle="Email" type="email" nameInSchema="email" className="mb-2"/>
                 <InputWithLabel<LoginUser> fieldTitle="Password" type="password" nameInSchema="password" className="mb-2" />
