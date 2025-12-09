@@ -8,6 +8,6 @@ export class CookieParam {
     public static sessionTokenExpireIn: number = 7 * 24 * 60 * 60 * 1000;
 
     public static refreshTokenName: string = "refreshToken";
-    public static refreshTokenPath: string = "/api/auth/refresh";
+    public static refreshTokenPath: string = "/refresh";
     public static refreshTokenExpireIn: number = 7 * 24 * 60 * 60 * 1000;
 }

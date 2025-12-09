@@ -41,21 +41,21 @@ export default function EditProfileForm({user}: Props) {
 
     return (
         <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="bg-white text-slate-800 max-w-sm items-center mx-auto rounded-xl shadow-2xl p-8 mt-10">
-                <h4 className="font-bold text-slate-800 text-center text-2xl mb-6">
+            <form onSubmit={form.handleSubmit(onSubmit)} className="bg-gray-100 dark:text-black dark:bg-black text-slate-800 max-w-sm items-center mx-auto rounded-xl shadow-2xl p-10 mt-10">
+                <h4 className="font-bold text-slate-800 text-center text-2xl mb-6 dark:text-white">
                     Edit Profile Form
                 </h4>
                 <div className="flex flex-col md:flex-row gap-2">
                     <div className="flex flex-col">
-                        <InputWithLabel<EditUserProfile> fieldTitle="Name" type="text" nameInSchema="name" className="mb-2"/>
-                        <InputWithLabel<EditUserProfile> fieldTitle="Password" type="password" nameInSchema="password" className="mb-2" />
-                        <InputWithLabel<EditUserProfile> fieldTitle="Phone" type="text" nameInSchema="phone" className="mb-2" />
+                        <InputWithLabel<EditUserProfile> fieldTitle="Name" type="text" nameInSchema="name" className="mb-2 dark:text-white"/>
+                        <InputWithLabel<EditUserProfile> fieldTitle="Password" type="password" nameInSchema="password" className="mb-2 dark:text-white" />
+                        <InputWithLabel<EditUserProfile> fieldTitle="Phone" type="text" nameInSchema="phone" className="mb-2 dark:text-white" />
                     </div>
 
                     <div className="flex flex-col">
-                        <InputWithLabel<EditUserProfile> fieldTitle="Email" type="email" nameInSchema="email" className="mb-2" readOnly/>
-                        <SelectWithLabel<EditUserProfile> fieldTitle="Gender" nameInSchema="gender" data={[{id: "male", value: "Male"}, {id: "female", value: "Female"}]} className="mb-2 w-full"/>
-                        <InputWithLabel<EditUserProfile> fieldTitle="Image" type="text" nameInSchema="image" className="mb-2" />
+                        <InputWithLabel<EditUserProfile> fieldTitle="Email" type="email" nameInSchema="email" className="mb-2 dark:text-white" readOnly/>
+                        <SelectWithLabel<EditUserProfile> fieldTitle="Gender" nameInSchema="gender" data={[{id: "male", value: "Male"}, {id: "female", value: "Female"}]} className="mb-2 w-full dark:text-white"/>
+                        <InputWithLabel<EditUserProfile> fieldTitle="Image" type="text" nameInSchema="image" className="mb-2 dark:text-white" />
 
                     </div>
                 </div>

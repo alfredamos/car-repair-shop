@@ -29,7 +29,7 @@ export function InputWithLabel<T>({fieldTitle, nameInSchema, className, ...props
                     <FormControl>
                         <Input
                             id={nameInSchema}
-                            className={`w-full max-w-xs ${className}`}
+                            className={`w-full max-w-xs ring-1 ring-gray-300 dark:ring-1 dark:ring-gray-300 ${className} ${props.readOnly && nameInSchema === "email" ? "dark:text-white" : ""}`}
                             {...props}
                             {...field}
                         />

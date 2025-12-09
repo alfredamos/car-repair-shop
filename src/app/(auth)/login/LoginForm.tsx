@@ -48,12 +48,12 @@ export default function LoginForm(){
 
     return (
         <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="bg-white text-slate-800 max-w-sm items-center mx-auto rounded-xl shadow-2xl p-10 mt-10">
-                <h4 className="font-bold text-slate-800 text-center text-2xl mb-6">
+            <form onSubmit={form.handleSubmit(onSubmit)} className="bg-gray-100 dark:text-black dark:bg-black text-slate-800 max-w-sm items-center mx-auto rounded-xl shadow-2xl p-10 mt-10">
+                <h4 className="font-bold text-slate-800 text-center text-2xl mb-6 dark:text-white">
                     Login Form
                 </h4>
-                <InputWithLabel<LoginUser> fieldTitle="Email" type="email" nameInSchema="email" className="mb-2"/>
-                <InputWithLabel<LoginUser> fieldTitle="Password" type="password" nameInSchema="password" className="mb-2" />
+                <InputWithLabel<LoginUser> fieldTitle="Email" type="email" nameInSchema="email" className={`mb-2}`}/>
+                <InputWithLabel<LoginUser> fieldTitle="Password" type="password" nameInSchema="password" className="mb-2 dark:text-white" />
                 <div className="flex items-center mt-4">
                     <Button type="submit" size="lg" className="flex-1 mb-4" variant="indigo">Save</Button>
                     <Button type="button" size="lg" className="flex-1 mb-4" variant="rose" onClick={() => form.reset(defaultValues)}>Reset</Button>

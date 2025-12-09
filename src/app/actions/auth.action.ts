@@ -28,6 +28,7 @@ import {getAccessToken} from "@/utils/getAccessToken";
 import {findTokenByAccessToken, revokedTokensByUserId} from "@/app/actions/token.action";
 import {makeCustomError} from "@/utils/makeCustomError";
 import {Role, User} from "@prisma/client";
+import {redirect} from "next/navigation";
 
 export async function changeUserPassword(changeUserPassword: ChangeUserPassword){
     //----> Destructure change-user-password payload.
@@ -159,15 +160,14 @@ export async function logoutUser(){
         //----> Invalidate all valid token associated with this user.
         await revokedTokensByUserId(tokenObj.userId);
 
-        //----> Delete all tokens and user-session.
+        //----> Delete access-token and user-session.
         await deleteCookieObj(CookieParam.accessTokenName, CookieParam.accessTokenPath)
-        await deleteCookieObj(CookieParam.refreshTokenName, CookieParam.refreshTokenPath)
         await deleteCookieObj(CookieParam.sessionTokenName, CookieParam.sessionTokenPath)
 
         //----> Send back response.
-        return new ResponseMessage("Logged out is successful!", "success", StatusCodes.OK);
+        redirect("/login")
     }catch(error){
-        return makeCustomError(error);
+        throw error;
     }
 
 }
@@ -178,13 +178,16 @@ export async function refreshUserToken(){
         const cookieStore = await cookies();
         const refreshToken = cookieStore.get(CookieParam.refreshTokenName)?.value as string;
 
+        console.log("Refresh User, cookieStore: ", cookieStore);
+        console.log("Refresh token : ", refreshToken);
+
         //----> Check for validity of token.
         const tokenJwt = validateUserToken(refreshToken);
 
         //----> Generate access-token, refresh-token and session.
         return await generateTokenAndSignInUser(tokenJwt);
     }catch(error){
-        return makeCustomError(error);
+        throw error;
     }
 
 }

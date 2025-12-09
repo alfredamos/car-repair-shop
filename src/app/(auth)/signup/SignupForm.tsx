@@ -37,26 +37,26 @@ export default function SignupForm() {
 
     return (
         <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="bg-white text-slate-800 max-w-sm items-center mx-auto rounded-xl shadow-2xl p-6 mt-10">
-                <h4 className="font-bold text-slate-800 text-center text-2xl mb-6">
+            <form onSubmit={form.handleSubmit(onSubmit)} className="bg-gray-100 dark:text-black dark:bg-black text-slate-800 max-w-sm items-center mx-auto rounded-xl shadow-2xl p-10 mt-10">
+                <h4 className="font-bold text-slate-800 text-center text-2xl mb-6 dark:text-white">
                     Signup Form
                 </h4>
                 <div className="flex flex-col md:flex-row gap-2">
                     <div className="flex flex-col">
-                        <InputWithLabel<SignupUser> fieldTitle="Name" type="text" nameInSchema="name" className="mb-2"/>
-                        <InputWithLabel<SignupUser> fieldTitle="Password" type="password" nameInSchema="password" className="mb-2" />
-                        <InputWithLabel<SignupUser> fieldTitle="Phone" type="password" nameInSchema="phone" className="mb-2" />
+                        <InputWithLabel<SignupUser> fieldTitle="Name" type="text" nameInSchema="name" className="mb-2 dark:text-white"/>
+                        <InputWithLabel<SignupUser> fieldTitle="Password" type="password" nameInSchema="password" className="mb-2 dark:text-white" />
+                        <InputWithLabel<SignupUser> fieldTitle="Phone" type="password" nameInSchema="phone" className="mb-2 dark:text-white" />
                     </div>
 
                     <div className="flex flex-col">
-                        <InputWithLabel<SignupUser> fieldTitle="Email" type="email" nameInSchema="email" className="mb-2"/>
-                        <InputWithLabel<SignupUser> fieldTitle="Confirm Password" type="password" nameInSchema="confirmPassword" className="mb-2" />
-                        <InputWithLabel<SignupUser> fieldTitle="Image" type="text" nameInSchema="image" className="mb-2" />
+                        <InputWithLabel<SignupUser> fieldTitle="Email" type="email" nameInSchema="email" className="mb-2 dark:text-white" />
+                        <InputWithLabel<SignupUser> fieldTitle="Confirm Password" type="password" nameInSchema="confirmPassword" className="mb-2 dark:text-white" />
+                        <InputWithLabel<SignupUser> fieldTitle="Image" type="text" nameInSchema="image" className="mb-2 dark:text-white" />
 
                     </div>
                     </div>
                 <div className="grid grid-cols-1 gap-4 md:colospan-2">
-                    <SelectWithLabel<SignupUser> fieldTitle="Gender" nameInSchema="gender" data={[{id: "male", value: "Male"}, {id: "female", value: "Female"}]} className="mb-2 w-full"/>
+                    <SelectWithLabel<SignupUser> fieldTitle="Gender" nameInSchema="gender" data={[{id: "male", value: "Male"}, {id: "female", value: "Female"}]} className="mb-2 w-full dark:text-white"/>
                 </div>
 
 
