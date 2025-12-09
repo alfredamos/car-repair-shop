@@ -21,7 +21,7 @@ export function TextAreaWithLabel<T>({fieldTitle, nameInSchema, className, ...pr
             render={({field}) => (
                 <FormItem>
                     <FormLabel
-                        className="text-base"
+                        className="text-base dark:text-white"
                         htmlFor={nameInSchema}
                     >
                         {fieldTitle}

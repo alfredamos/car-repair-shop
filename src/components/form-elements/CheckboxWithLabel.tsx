@@ -27,7 +27,7 @@ export function CheckboxWithLabel<T>({fieldTitle, nameInSchema, message}: Props<
                     </FormControl>
                     {message}
                     <div className="space-y-1 leading-none">
-                        <FormLabel>
+                        <FormLabel className="dark:text-white">
                             {fieldTitle}
                         </FormLabel>
                         <FormMessage />

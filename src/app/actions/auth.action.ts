@@ -20,10 +20,10 @@ import {StatusCodes} from "http-status-codes";
 import * as bcrypt from "bcryptjs";
 import {prisma} from "@/app/db/prisma.db";
 import {ResponseMessage} from "@/utils/responseMessage.util";
-import {TokenJwt} from "@/app/types/type";
+import {TokenJwt, UserSession} from "@/app/types/type";
 import {cookies} from "next/headers";
 import {CookieParam} from "@/utils/cookieParam.util";
-import {getSession, validateUserToken} from "@/utils/getSession";
+import {validateUserToken} from "@/utils/validateToken";
 import {getAccessToken} from "@/utils/getAccessToken";
 import {findTokenByAccessToken, revokedTokensByUserId} from "@/app/actions/token.action";
 import {makeCustomError} from "@/utils/makeCustomError";
@@ -256,4 +256,48 @@ export async function changeUserRole(changeRoleOfUser: ChangeUserRole){
     }
 
 }
+
+export async function getSession() : Promise<UserSession> {
+
+
+    const {accessToken, cookieStore}  = await getAccessToken();
+
+    //----> Check for null token.
+    if (!accessToken) {
+        throw catchError(StatusCodes.UNAUTHORIZED, "Could not find access token");
+    }
+
+    //----> Validate token.
+    const tokenJwt = validateUserToken(accessToken);
+    if (!tokenJwt) {
+        const session : UserSession = {
+            id: "",
+            name: "",
+            email: "",
+            accessToken: "",
+            role: Role.User,
+            isAdmin: false,
+            isLoggedIn: false,
+        }
+        return session;
+    }
+
+    //----> Get session from cookie.
+    const sessionString = cookieStore.get(CookieParam.sessionTokenName)?.value as string;
+
+    //----> Check for null session
+    if (!sessionString) {
+        throw catchError(StatusCodes.UNAUTHORIZED, "Could not find session!");
+    }
+
+    //----> Parse session
+    const session = JSON.parse(sessionString) as UserSession;
+
+    //----> Send back session.
+    return session;
+
+}
+
+
+
 

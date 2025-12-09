@@ -109,3 +109,15 @@ export async function deleteCookieObj(cookieName: string, cookiePath: string){
         maxAge:0
     })
 }
+
+export function validateUserToken(token: string){
+    //----> Verify the jwt-token
+    try {
+        const tokenJwt = jwt?.verify(token, process.env.JWT_TOKEN_KEY!) as TokenJwt;
+        return tokenJwt
+    }catch(_error: unknown) {
+        throw catchError(StatusCodes.UNAUTHORIZED, "Could not find token!");
+    }
+
+}
+

@@ -4,6 +4,7 @@ import {FormControl, FormField, FormItem, FormLabel, FormMessage} from "@/compon
 import {InputHTMLAttributes} from "react";
 import { useFormContext } from 'react-hook-form';
 import {Input} from "@/components/ui/input";
+import {formattedDate} from "@/utils/formattedDate";
 
 type Props<T> = {
     fieldTitle: string;
@@ -18,10 +19,11 @@ export function InputWithLabel<T>({fieldTitle, nameInSchema, className, ...props
         <FormField
             control={form.control}
             name={nameInSchema}
-            render={({field}) => (
-                <FormItem>
+            render={({field}) => {
+
+                return <FormItem>
                     <FormLabel
-                        className="text-base"
+                        className="text-base dark:text-white"
                         htmlFor={nameInSchema}
                     >
                         {fieldTitle}
@@ -36,7 +38,7 @@ export function InputWithLabel<T>({fieldTitle, nameInSchema, className, ...props
                     </FormControl>
                     <FormMessage/>
                 </FormItem>
-            )}
+            }}
         />
 
 

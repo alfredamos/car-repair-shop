@@ -1,5 +1,5 @@
 import {Role} from "@prisma/client";
-import {getSession} from "@/utils/getSession";
+import {getSession} from "@/app/actions/auth.action";
 
 export async function adminOrManagerOrOwnerCheckAndUserSession() {
     //----> Get session.

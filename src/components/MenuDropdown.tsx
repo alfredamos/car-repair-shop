@@ -7,6 +7,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import Link from "next/link";
 import {JSX} from "react";
+import {NavLink} from "@/components/NavLink";
 
 
 interface Props {
@@ -24,9 +25,7 @@ export function MenuDropdown({title, subTitle, items}: Props): JSX.Element {
                 <DropdownMenuSeparator />
                 {
                     items.map(item => (
-                        <DropdownMenuItem key={item.label}>
-                            <Link href={item.href} className="py-2 px-4 text-sm font-medium text-gray-600 bg-gray-100 rounded hover:bg-gray-200 transition duration-300 w-full">{item.label}</Link>
-                        </DropdownMenuItem>
+                        <NavLink key={item.label} href={item.href} label={item.label}/>
                     ))
 
                 }

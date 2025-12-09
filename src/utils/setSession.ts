@@ -1,5 +1,4 @@
-import {TokenJwt, UserSession} from "@/app/types/type";
-import {Role} from "@prisma/client";
+import {UserSession} from "@/app/types/type";
 import {setCookie} from "@/utils/setCookie";
 import {CookieParam} from "@/utils/cookieParam.util";
 

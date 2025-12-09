@@ -58,7 +58,7 @@ export default function SignInAndOut() {
                    </NavigationMenuItem>
                    <NavigationMenuItem>
                        <Button asChild variant="ghost" className="hover:bg-black hover:text-white">
-                           <Link href="/signup">Sign Up</Link>
+                           <Link href="/signup">Register</Link>
                        </Button>
                    </NavigationMenuItem>
                    <ModeToggle/>

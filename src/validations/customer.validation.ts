@@ -10,8 +10,9 @@ export const customerSchema = z.object({
     phone: z.string().min(1, { message: "Phone cannot be empty." }),
     image: z.string().min(1, { message: "Image cannot be empty." }),
     gender: z.enum(Gender),
-    dateOfBirth: z.string().optional(),
+    dateOfBirth: z.date().min(1, { message: "Date of birth cannot be empty." }),
     userId: z.string().optional(),
+    notes: z.string().min(1, { message: "Note cannot be empty." }),
 });
 
 export type Customer = z.infer<typeof customerSchema>

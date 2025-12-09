@@ -15,7 +15,9 @@ model Customer {
   phone       String   @db.VarChar(255)
   gender      Gender   @default(Male)
   image       String   @db.VarChar(255)
+  active      Boolean  @default(true)
   dateOfBirth DateTime
+  notes       String?  @db.Text
 
   Ticket Ticket[]
   user   User     @relation(fields: [userId], references: [id])
@@ -47,11 +49,11 @@ model User {
 }
 
 model Ticket {
-  id          String  @id @default(uuid())
-  title       String  @db.VarChar(255)
-  description String  @db.Text
-  completed   Boolean @default(false)
-  tech        String  @db.VarChar(255)
+  id        String  @id @default(uuid())
+  title     String  @db.VarChar(255)
+  notes     String  @db.Text
+  completed Boolean @default(false)
+  tech      String  @db.VarChar(255)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

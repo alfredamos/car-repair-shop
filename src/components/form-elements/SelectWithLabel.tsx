@@ -26,7 +26,7 @@ export function SelectWithLabel<T>({fieldTitle, data, nameInSchema, className}: 
             render={({ field }) => (
                 <FormItem>
                     <FormLabel
-                        className="text-base"
+                        className="text-base dark:text-white"
                         htmlFor={nameInSchema}
                     >
                         {fieldTitle}
@@ -48,7 +48,7 @@ export function SelectWithLabel<T>({fieldTitle, data, nameInSchema, className}: 
                             {data.map(item => (
                                 <SelectItem
                                     key={`${nameInSchema}_${item.id}`}
-                                    value={item.value}
+                                    value={item.id}
                                 >
                                     {item.value} 
                                 </SelectItem>
