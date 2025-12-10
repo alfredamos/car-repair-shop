@@ -4,7 +4,6 @@ import {
     TableBody,
     TableCaption,
     TableCell,
-    TableFooter,
     TableHead,
     TableHeader,
     TableRow
@@ -19,7 +18,7 @@ type Props = {
 
 export default function CustomerTable({ customers }: Props) {
     return (
-        <div className="mt-10">
+        <div className="mt-10 max-w-sm md:max-w-2xl mx-auto">
         <Table className="mt-5">
             <TableCaption>A list of Car-repair-shop customers.</TableCaption>
             <TableHeader>

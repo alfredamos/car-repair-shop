@@ -4,7 +4,16 @@ import {StatusCodes} from "http-status-codes";
 
 export async function getOneTicket(id: string)  {
     //----> Fetch the ticket object with the given id.
-    const ticket = await prisma.ticket.findUnique({where:{id}});
+    const ticket = await prisma.ticket.findUnique({where:{id}, include: {
+        customer: {
+            select: {
+                id: true,
+                name: true,
+                email: true,
+            }
+
+        }
+        }});
 
     //----> Check for error.
     if (!ticket) {

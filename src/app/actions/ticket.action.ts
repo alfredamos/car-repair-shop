@@ -110,7 +110,18 @@ export async function getAllTickets() {
         }
 
         //----> Fetch all tickets.
-        return await prisma.ticket.findMany({})
+        return await prisma.ticket.findMany({
+            include: {
+                customer: {
+                    select: {
+                        id: true,
+                        name: true,
+                        email: true,
+                    }
+
+                }
+            }
+        })
     }catch (error) {
         return makeCustomError(error);
     }
@@ -126,7 +137,18 @@ export async function getAllTicketsByEmail(email: string) {
         }
 
         //----> Fetch all tickets.
-        return await prisma.ticket.findMany({where: {tech: email}})
+        return await prisma.ticket.findMany({where: {tech: email},
+            include: {
+                customer: {
+                    select: {
+                        id: true,
+                        name: true,
+                        email: true,
+                    }
+
+                }
+            }
+        })
     }catch (error) {
         return makeCustomError(error);
     }
@@ -143,7 +165,7 @@ export async function ticketJobCompleted(id: string) {
         //----> Save the changes in the database.
         const updatedTicket = await prisma.ticket.update({
             where: {id},
-            data: {...ticket}
+            data: {...ticket as Ticket}
         });
 
         //----> Send back the response.
