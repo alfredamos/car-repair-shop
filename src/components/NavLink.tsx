@@ -10,6 +10,7 @@ import {StatusCodes} from "http-status-codes";
 import {CustomError} from "@/utils/customError.util";
 import {LocalStorageParam} from "@/utils/LocalStorageParam";
 import {useRouter} from "next/navigation";
+import {useEffect, useState} from "react";
 
 type Props = {
     href: string;
@@ -19,10 +20,16 @@ type Props = {
 export function NavLink({href, label}: Props) {
     const {setAuthSession : setUserResponse} = useAuthContext();
     const {setLocalStorage} = useLocalStorage<UserSession>();
+    const [isNotRefresh, setIsNotRefresh] = useState(false)
 
     const router = useRouter();
 
-    const isNotRefresh = href !== "/refresh";
+    useEffect(() => {
+        const checkRefresh = async () => {
+            setIsNotRefresh(href !== "/refresh")
+        }
+        checkRefresh().then().catch(error => console.error(error));
+    },[href])
 
     const refreshUserTokenAction = async () => {
         const response = await axios.post("/api/auth/refresh", {});
@@ -47,7 +54,6 @@ export function NavLink({href, label}: Props) {
                         <form action={refreshUserTokenAction} className="py-2 px-4 text-sm font-medium text-gray-600 bg-gray-100 rounded hover:bg-gray-200 transition duration-300 w-full">
                             <button type="submit">{label}</button>
                         </form>
-                        {/*<Link href={href} className="py-2 px-4 text-sm font-medium text-gray-600 bg-gray-100 rounded hover:bg-gray-200 transition duration-300 w-full">{label}</Link>*/}
                     </DropdownMenuItem>
                 )}
 

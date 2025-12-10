@@ -1,5 +1,3 @@
-'use client';
-
 import { useState, useRef, useEffect, ReactNode } from 'react';
 import Link from 'next/link';
 import { ChevronDown } from 'lucide-react';

@@ -1,7 +1,13 @@
-import {AddCustomerForm} from "@/app/customers/add/AddCustomerForm";
+import {CustomerForm} from "@/app/customers/CustomerForm";
+import {initialCustomer} from "@/app/customers/initialCustomer";
 
-export default function AddCustomerPage(){
+export default async function AddCustomerPage(){
+    const initializer = initialCustomer()
     return (
-        <AddCustomerForm/>
+        <CustomerForm
+            defaultValues={initializer}
+            formLabel="Create"
+        />
     );
+
 }

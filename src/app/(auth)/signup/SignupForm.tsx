@@ -56,7 +56,7 @@ export default function SignupForm() {
                     </div>
                     </div>
                 <div className="grid grid-cols-1 gap-4 md:colospan-2">
-                    <SelectWithLabel<SignupUser> fieldTitle="Gender" nameInSchema="gender" data={[{id: "male", value: "Male"}, {id: "female", value: "Female"}]} className="mb-2 w-full dark:text-white"/>
+                    <SelectWithLabel<SignupUser> fieldTitle="Gender" nameInSchema="gender" data={[{id: "Male", value: "Male"}, {id: "Female", value: "Female"}]} className="mb-2 w-full dark:text-white"/>
                 </div>
 
 

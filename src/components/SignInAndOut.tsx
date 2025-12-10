@@ -12,13 +12,25 @@ import {MenuDropdown} from "@/components/MenuDropdown";
 import {adminItems} from "@/utils/adminItems";
 import {ModeToggle} from "@/components/theme-toggler";
 import Link from "next/link";
+import {useEffect, useState} from "react";
 
 export default function SignInAndOut() {
     const {authSession} = useAuthContext();
     const {getLocalStorage, removeLocalStorage} = useLocalStorage<UserSession>()
 
-    const isAdmin = authSession?.isAdmin ?? getLocalStorage(LocalStorageParam.authSession)?.isAdmin;
-    const isLoggedIn = authSession?.isLoggedIn ?? getLocalStorage(LocalStorageParam.authSession)?.isLoggedIn;
+    const [isLoading, setIsLoading] = useState(false);
+    const [isLoggedIn, setIsLoggedIn] = useState(authSession?.isLoggedIn ?? getLocalStorage(LocalStorageParam.authSession)?.isLoggedIn);
+    const [isAdmin, setIsAdmin] = useState(authSession?.isAdmin ?? getLocalStorage(LocalStorageParam.authSession)?.isAdmin);
+
+    useEffect(() => {
+        const refreshAuth = async () => {
+            setIsLoggedIn(authSession?.isLoggedIn ?? getLocalStorage(LocalStorageParam.authSession)?.isLoggedIn);
+            setIsAdmin(authSession?.isAdmin ?? getLocalStorage(LocalStorageParam.authSession)?.isAdmin);
+        }
+
+        refreshAuth().then().catch(error => console.error(error));
+    }, [authSession, getLocalStorage]);
+
 
     const logoutUserAction = async () => {
         removeLocalStorage(LocalStorageParam.authSession);
@@ -29,16 +41,13 @@ export default function SignInAndOut() {
         <>
             {
                isLoggedIn ? (<NavigationMenuList className="space-x-2">
-                  {isAdmin ? (<NavigationMenuItem>
-                      <Button variant="ghost" className="hover:bg-black hover:text-white">
-                          <MenuDropdown items={adminItems} title="Admin" subTitle="Admin Panel" />
-                      </Button>
-                  </NavigationMenuItem>) : (null)}
+                  {isAdmin ? (<NavigationMenuItem className="hover:bg-black hover:text-white focus:outline-none gap-2 px-4 pt-1 pb-2 rounded-md">
+                        <MenuDropdown items={adminItems} title="Admin" subTitle="Admin Panel" />
+                  </NavigationMenuItem>) : ""}
 
-                   <NavigationMenuItem>
-                       <Button variant="ghost" className="hover:bg-black hover:text-white focus:outline-none">
-                           <MenuDropdown items={settingItems} title="Settings" subTitle="My Account" />
-                       </Button>
+                   <NavigationMenuItem className="hover:bg-black hover:text-white focus:outline-none gap-2 px-4 pt-1 pb-2 rounded-md">
+                       <MenuDropdown items={settingItems} title="Settings" subTitle="My Account" />
+
                    </NavigationMenuItem>
                    <NavigationMenuItem>
                        <form action={logoutUserAction}>

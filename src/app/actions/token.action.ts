@@ -14,7 +14,7 @@ import {
 import {StatusCodes} from "http-status-codes";
 import catchError from "http-errors";
 import {makeCustomError} from "@/utils/makeCustomError";
-import {adminOrManagerOrOwnerCheckAndUserSession} from "@/utils/adminOrManagerOrOwnerCheckAndUserSession";
+import {adminOrManagerOrOwnerCheckAndUserSession} from "@/app/actions/auth.action";
 
 export async function createToken(token: Token){
     //----> Insert the token into db.

@@ -1,6 +1,7 @@
 import {getCustomerById} from "@/app/actions/customer.action";
 import {CustomError} from "@/utils/customError.util";
-import {EditCustomerForm} from "@/app/customers/[id]/edit/EditCustomerForm";
+import {CustomerForm} from "@/app/customers/CustomerForm";
+import {initialCustomer} from "@/app/customers/initialCustomer";
 
 export default async function EditCustomerPage({params}:{params: Promise<{id: string}>}) {
     //----> Get the customer id from params.
@@ -16,7 +17,13 @@ export default async function EditCustomerPage({params}:{params: Promise<{id: st
 
     console.log("In edit-customer-page, customer : ", response);
 
+    const initializer = initialCustomer(response);
+
     return (
-        <EditCustomerForm customer={response}/>
+        <CustomerForm
+            defaultValues={initializer}
+            formLabel="Edit"
+            id={id}
+        />
     );
 }

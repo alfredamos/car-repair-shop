@@ -7,7 +7,7 @@ import {StatusCodes} from "http-status-codes";
 import {prisma} from "@/app/db/prisma.db";
 import {ResponseMessage} from "@/utils/responseMessage.util";
 import {fromUserToUserResponse} from "@/app/actions/auth-helpers";
-import {adminOrManagerOrOwnerCheckAndUserSession} from "@/utils/adminOrManagerOrOwnerCheckAndUserSession";
+import {adminOrManagerOrOwnerCheckAndUserSession} from "@/app/actions/auth.action";
 
 export async function deleteUserById(id: string){
     try{

@@ -1,11 +1,12 @@
+"use server"
+
 import {Ticket} from "@prisma/client"
 import {prisma} from "@/app/db/prisma.db";
 import {makeCustomError} from "@/utils/makeCustomError";
-import {adminOrManagerOrOwnerCheckAndUserSession} from "@/utils/adminOrManagerOrOwnerCheckAndUserSession";
 import {StatusCodes} from "http-status-codes";
-import {ResponseMessage} from "@/utils/responseMessage.util";
 import catchError from "http-errors";
 import {getOneTicket} from "@/app/actions/ticket-helper";
+import {adminOrManagerOrOwnerCheckAndUserSession} from "@/app/actions/auth.action";
 
 export async function createTicket(ticket: Ticket) {
     try{
@@ -42,12 +43,12 @@ export async function deleteTicketById(id: string) {
         await getOneTicket(id);
 
         //----> Delete the ticket with the given id.
-        await prisma.ticket.delete({
+        const response = await prisma.ticket.delete({
             where: {id}
         });
 
         //----> Send back response.
-        return new ResponseMessage("Ticket deleted successfully.", "success", StatusCodes.OK);
+        return response;
     }catch(error){
         return makeCustomError(error);
     }
@@ -67,13 +68,13 @@ export async function editTicketById(id: string, ticket: Ticket) {
         await getOneTicket(id);
 
         //----> Edit the ticket with the given id.
-        await prisma.ticket.update({
+        const response = await prisma.ticket.update({
             where: {id},
             data: {...ticket}
         });
 
         //----> Send back response.
-        return new ResponseMessage("Ticket edited successfully.", "success", StatusCodes.OK);
+        return response;
     }catch(error){
         return makeCustomError(error);
     }

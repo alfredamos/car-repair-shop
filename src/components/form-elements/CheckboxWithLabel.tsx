@@ -18,7 +18,7 @@ export function CheckboxWithLabel<T>({fieldTitle, nameInSchema, message}: Props<
             control={form.control}
             name={nameInSchema}
             render={({ field }) => (
-                <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
+                <FormItem className="flex flex-row items-start space-x-3 space-y-2 dark:text-white w-full mt-2">
                     <FormControl>
                         <Checkbox
                             checked={field.value}

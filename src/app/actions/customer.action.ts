@@ -1,11 +1,12 @@
+"use server"
+
 import {Customer} from "@prisma/client"
 import {prisma} from "@/app/db/prisma.db";
 import {makeCustomError} from "@/utils/makeCustomError";
-import {adminOrManagerOrOwnerCheckAndUserSession} from "@/utils/adminOrManagerOrOwnerCheckAndUserSession";
 import {StatusCodes} from "http-status-codes";
-import {ResponseMessage} from "@/utils/responseMessage.util";
 import catchError from "http-errors";
 import {getOneCustomer} from "@/app/actions/customer-helper";
+import {adminOrManagerOrOwnerCheckAndUserSession} from "@/app/actions/auth.action";
 
 export async function createCustomer(customer: Customer) {
     try{
@@ -18,6 +19,7 @@ export async function createCustomer(customer: Customer) {
 
         //----> Store the new-customer in the db.
         customer.userId = session.id;
+        customer.dateOfBirth = new Date(customer.dateOfBirth);
         const newCustomer = await prisma.customer.create({
             data: {...customer}
         });
@@ -43,12 +45,12 @@ export async function deleteCustomerById(id: string) {
         await getOneCustomer(id);
 
         //----> Delete the customer with the given id.
-        await prisma.customer.delete({
+        const response = await prisma.customer.delete({
             where: {id}
         });
 
         //----> Send back response.
-        return new ResponseMessage("Customer deleted successfully.", "success", StatusCodes.OK);
+        return response;
     }catch(error){
         return makeCustomError(error);
     }
@@ -68,13 +70,14 @@ export async function editCustomerById(id: string, customer: Customer) {
         await getOneCustomer(id);
 
         //----> Edit the customer with the given id.
-        await prisma.customer.update({
+        customer.dateOfBirth = new Date(customer.dateOfBirth);
+        const response = await prisma.customer.update({
             where: {id},
             data: {...customer}
         });
 
         //----> Send back response.
-        return new ResponseMessage("Customer edited successfully.", "success", StatusCodes.OK);
+        return response;
     }catch(error){
         return makeCustomError(error);
     }
