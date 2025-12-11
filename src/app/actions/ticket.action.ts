@@ -118,9 +118,8 @@ export async function getAllTickets() {
                         name: true,
                         email: true,
                     }
-
-                }
-            }
+                },
+            },
         })
     }catch (error) {
         return makeCustomError(error);

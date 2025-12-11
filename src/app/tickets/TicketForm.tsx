@@ -9,12 +9,12 @@ import {SelectWithLabel} from "@/components/form-elements/SelectWithLabel";
 import {TextAreaWithLabel} from "@/components/form-elements/TextAreaWithLabel";
 import {Button} from "@/components/ui/button";
 import {Customer, Ticket} from "@prisma/client";
-import {CheckboxWithLabel} from "@/components/form-elements/CheckboxWithLabel";
 import {customerIdAndName, userTechEmail} from "@/app/tickets/objIdAndValue";
 import {UserResponse} from "@/app/types/type";
 import {CustomError} from "@/utils/customError.util";
 import {redirect} from "next/navigation";
 import {createTicket, editTicketById} from "@/app/actions/ticket.action";
+import {CheckBoxWithLabel} from "@/components/form-elements/CheckBoxWithLabel";
 
 type Props = {
     customers: Customer[];
@@ -62,10 +62,10 @@ export function TicketForm({customers, defaultValues, formLabel, users, id}: Pro
                 <div className="flex flex-col gap-2">
                     <div className="flex flex-col">
                         <InputWithLabel<TicketValidate> fieldTitle="Title" type="text" nameInSchema="title" className="mb-2 dark:text-white" />
-                        <SelectWithLabel<TicketValidate> fieldTitle="Tech" nameInSchema="tech" data={[...userTechEmail(users)]} className="w-full dark:text-white"/>
-                        <SelectWithLabel<TicketValidate> fieldTitle="Customer ID" nameInSchema="customerId" data={[...customerIdAndName(customers)]} className="w-full dark:text-white"/>
+                        <SelectWithLabel<TicketValidate> fieldTitle="Tech" nameInSchema="tech" data={[...userTechEmail(users)]} className="w-full dark:text-white mb-2"/>
+                        <SelectWithLabel<TicketValidate> fieldTitle="Customer ID" nameInSchema="customerId" data={[...customerIdAndName(customers)]} className="w-full dark:text-white mb-2"/>
                         <TextAreaWithLabel<TicketValidate> fieldTitle="Notes" nameInSchema="notes" className="dark:text-white"/>
-                        <CheckboxWithLabel<TicketValidate> fieldTitle="Completed" nameInSchema="completed" message="Yes" />
+                        <CheckBoxWithLabel<TicketValidate> fieldTitle="Completed" nameInSchema="completed" message="Yes" />
                     </div>
                 </div>
                 <div className="flex flex-col md:flex-row gap-2 mt-6">
