@@ -4,16 +4,14 @@ import TicketTable from "@/app/tickets/TicketTable";
 
 export default async function AllTicketsPage(){
     //----> Fetch all tickets.
-    const response = await getAllTickets();
+    const responseTickets = await getAllTickets();
 
     //----> Check for error.
-    if (response instanceof CustomError) {
-        return <div className="h-dvh flex justify-center items-center"><h1 className="font-bold p-10 bg-red-200 ring-1 ring-red-200 rounded-lg shadow-lg text-black">{response?.message}</h1></div>
+    if (responseTickets instanceof CustomError) {
+        return <div className="h-dvh flex justify-center items-center"><h1 className="font-bold p-10 bg-red-200 ring-1 ring-red-200 rounded-lg shadow-lg text-black">{responseTickets?.message}</h1></div>
     }
 
-
-
     return (
-        <TicketTable tickets={response} />
+        <TicketTable tickets={responseTickets} />
     );
 }

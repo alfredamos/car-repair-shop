@@ -1,7 +1,7 @@
 "use client"
 
 import {editProfileUserSchema, EditUserProfile,} from "@/validations/auth.validation";
-import {redirect} from "next/navigation";
+import {redirect, useRouter} from "next/navigation";
 import {Gender} from "@prisma/client";
 import {useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
@@ -11,12 +11,14 @@ import {SelectWithLabel} from "@/components/form-elements/SelectWithLabel";
 import {Button} from "@/components/ui/button";
 import {editUserProfile} from "@/app/actions/auth.action";
 import {UserResponse} from "@/app/types/type";
+import {Separator} from "@/components/ui/separator";
 
 type Props = {
     user: UserResponse;
 }
 
 export default function EditProfileForm({user}: Props) {
+    const router = useRouter();
     async function onSubmit(values: EditUserProfile) {
         console.log("Form submitted with values:", values);
         await editUserProfile(values);
@@ -41,10 +43,11 @@ export default function EditProfileForm({user}: Props) {
 
     return (
         <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="bg-gray-100 dark:text-black dark:bg-black text-slate-800 max-w-sm items-center mx-auto rounded-xl shadow-2xl p-10 mt-10">
-                <h4 className="font-bold text-slate-800 text-center text-2xl mb-2 dark:text-white">
+            <form onSubmit={form.handleSubmit(onSubmit)} className="bg-gray-100 dark:text-black dark:bg-black text-slate-800 max-w-sm items-center mx-auto rounded-xl shadow-2xl py-6 px-10 mt-10">
+                <h4 className="font-bold text-slate-800 text-center text-xl mb-2 dark:text-white">
                     Edit Profile Form
                 </h4>
+                <Separator className="mt-4 mb-4"/>
                 <div className="flex flex-col md:flex-row gap-2">
                     <div className="flex flex-col">
                         <InputWithLabel<EditUserProfile> fieldTitle="Name" type="text" nameInSchema="name" className="mb-2 dark:text-white"/>
@@ -59,10 +62,11 @@ export default function EditProfileForm({user}: Props) {
 
                     </div>
                 </div>
-
-                <div className="flex flex-col md:flex-row gap-2 mt-6">
-                    <Button type="submit" size="lg" className="flex-1 mb-2" variant="indigo">Save</Button>
-                    <Button type="button" size="lg" className="flex-1 mb-4" variant="rose" onClick={() => form.reset(defaultValues)}>Reset</Button>
+                <Separator className="mt-4"/>
+                <div className="flex flex-col md:flex-row items-center md:justify-between mt-6 gap-2">
+                    <Button type="button" size="sm" className="w-full md:w-1/4 mb-4" variant="back" onClick={() => router.back()}>Back</Button>
+                    <Button type="submit" size="sm" className="w-full md:w-1/4 mb-4" variant="indigo">Save</Button>
+                    <Button type="button" size="sm" className="w-full md:w-1/4 mb-4" variant="rose" onClick={() => form.reset(defaultValues)}>Reset</Button>
                 </div>
 
             </form>

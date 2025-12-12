@@ -10,6 +10,7 @@ import {
 import {Button} from "@/components/ui/button";
 import Link from "next/link";
 import {UserResponse} from "@/app/types/type";
+import {DeleteUserButton} from "@/app/users/DeleteUserButton";
 
 type Props = {
     users: UserResponse[]
@@ -18,6 +19,12 @@ type Props = {
 export default function UserTable({ users }: Props) {
     return (
         <div className="mt-10 max-w-sm md:max-w-2xl mx-auto">
+            <div className="flex items-center justify-between">
+                <span>Add New User</span>
+                <Button asChild size="lg" className="font-bold">
+                    <Link href="/signup">Add</Link>
+                </Button>
+            </div>
             <Table className="mt-5">
                 <TableCaption>A list of Car-repair-shop users.</TableCaption>
                 <TableHeader>
@@ -48,11 +55,9 @@ export default function UserTable({ users }: Props) {
                             <TableCell className="text-right">{user.gender}</TableCell>
                             <TableCell className="w-1/3">
                                 <Button variant="indigo" type="button" size="sm" className="m-2">
-                                    <Link href={`/customers/${user.id}/detail`}>Detail</Link>
+                                    <Link href={`/users/${user.id}/detail`}>Detail</Link>
                                 </Button>
-                                <Button variant="rose" type="button" size="sm" className="m-2">
-                                    <Link href={`/customers/${user.id}/delete`}>Delete</Link>
-                                </Button>
+                                <DeleteUserButton name={user.name} path={`/users/${user.id}/delete`}/>
                             </TableCell>
                         </TableRow>
                     ))}

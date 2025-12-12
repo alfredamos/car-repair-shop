@@ -11,7 +11,8 @@ import {TextAreaWithLabel} from "@/components/form-elements/TextAreaWithLabel";
 import {createCustomer, editCustomerById} from "@/app/actions/customer.action";
 import {Customer} from "@prisma/client";
 import {CustomError} from "@/utils/customError.util";
-import {redirect} from "next/navigation";
+import {redirect, useRouter} from "next/navigation";
+import {Separator} from "@/components/ui/separator";
 
 type Props = {
     formLabel: string;
@@ -20,6 +21,8 @@ type Props = {
 }
 
 export function CustomerForm({defaultValues, formLabel, id}: Props) {
+    const router = useRouter();
+
     async function onSubmit(values: CustomerValidate) {
 
         if (formLabel === "Create") {
@@ -50,10 +53,11 @@ export function CustomerForm({defaultValues, formLabel, id}: Props) {
 
     return (
         <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="bg-gray-100 dark:text-black dark:bg-black text-slate-800 max-w-sm items-center mx-auto rounded-xl shadow-2xl p-10 mt-10">
-                <h4 className="font-bold text-slate-800 text-center text-2xl mb-2 dark:text-white">
+            <form onSubmit={form.handleSubmit(onSubmit)} className="bg-gray-100 dark:text-black dark:bg-black text-slate-800 max-w-sm items-center mx-auto rounded-xl shadow-2xl py-6 px-10 mt-10">
+                <h4 className="font-bold text-slate-800 text-center text-xl mb-2 dark:text-white">
                     {`${formLabel} Customer Form`}
                 </h4>
+                <Separator className="mt-4 mb-4"/>
                 <div className="flex flex-col md:flex-row gap-2">
                     <div className="flex flex-col md:flex-1">
                         <InputWithLabel<CustomerValidate> fieldTitle="Email" type="text" nameInSchema="email" className="mb-2 dark:text-white"/>
@@ -71,12 +75,12 @@ export function CustomerForm({defaultValues, formLabel, id}: Props) {
                     <SelectWithLabel<CustomerValidate> fieldTitle="Gender" nameInSchema="gender" data={[{id: "Male", value: "Male"}, {id: "Female", value: "Female"}]} className="w-full dark:text-white"/>
                     <TextAreaWithLabel<CustomerValidate> fieldTitle="Notes" nameInSchema="notes" className="mb-3 dark:text-white -mt-1.5" />
                 </div>
-
-                <div className="flex flex-col md:flex-row gap-2 mt-6">
-                    <Button type="submit" size="lg" className="flex-1 mb-2" variant="indigo">Save</Button>
-                    <Button type="button" size="lg" className="flex-1 mb-4" variant="rose" onClick={() => form.reset(defaultValues)}>Reset</Button>
+                <Separator className="mt-4"/>
+                <div className="flex flex-col md:flex-row items-center md:justify-between mt-6 gap-2">
+                    <Button type="button" size="sm" className="w-full md:w-1/4 mb-4" variant="back" onClick={() => router.back()}>Back</Button>
+                    <Button type="submit" size="sm" className="w-full md:w-1/4 mb-4" variant="indigo">Save</Button>
+                    <Button type="button" size="sm" className="w-full md:w-1/4 mb-4" variant="rose" onClick={() => form.reset(defaultValues)}>Reset</Button>
                 </div>
-
             </form>
         </Form>
     )

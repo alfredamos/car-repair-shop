@@ -2,8 +2,8 @@ import {CustomError} from "@/utils/customError.util";
 import {getAllCustomers} from "@/app/actions/customer.action";
 import {getAllUsers} from "@/app/actions/user.action";
 import {getTicketById} from "@/app/actions/ticket.action";
-import {TicketForm} from "@/app/tickets/TicketForm";
 import {initialTicket} from "@/app/tickets/initialTicket";
+import {TicketForm} from "@/app/tickets/TicketForm";
 
 export default async function TicketEditPage({params}:{params:Promise<{id: string}>}){
     //----> Get the id from params.

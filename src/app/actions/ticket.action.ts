@@ -7,6 +7,7 @@ import {StatusCodes} from "http-status-codes";
 import catchError from "http-errors";
 import {getOneTicket} from "@/app/actions/ticket-helper";
 import {adminOrManagerOrOwnerCheckAndUserSession} from "@/app/actions/auth.action";
+import {revalidatePath} from "next/cache";
 
 export async function createTicket(ticket: Ticket) {
     try{
@@ -110,17 +111,7 @@ export async function getAllTickets() {
         }
 
         //----> Fetch all tickets.
-        return await prisma.ticket.findMany({
-            include: {
-                customer: {
-                    select: {
-                        id: true,
-                        name: true,
-                        email: true,
-                    }
-                },
-            },
-        })
+        return await prisma.ticket.findMany({})
     }catch (error) {
         return makeCustomError(error);
     }
@@ -136,18 +127,7 @@ export async function getAllTicketsByEmail(email: string) {
         }
 
         //----> Fetch all tickets.
-        return await prisma.ticket.findMany({where: {tech: email},
-            include: {
-                customer: {
-                    select: {
-                        id: true,
-                        name: true,
-                        email: true,
-                    }
-
-                }
-            }
-        })
+        return await prisma.ticket.findMany({where: {tech: email}})
     }catch (error) {
         return makeCustomError(error);
     }
@@ -170,7 +150,8 @@ export async function ticketJobCompleted(id: string) {
         //----> Send back the response.
         return updatedTicket;
     }catch(error){
-        return makeCustomError(error);
+       console.error(error);
+       return makeCustomError(error);
     }
 
 }

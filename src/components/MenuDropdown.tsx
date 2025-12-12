@@ -5,7 +5,6 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu";
-import Link from "next/link";
 import {JSX} from "react";
 import {NavLink} from "@/components/NavLink";
 
