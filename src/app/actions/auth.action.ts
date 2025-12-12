@@ -10,7 +10,7 @@ import {
     SignupUser
 } from "@/validations/auth.validation";
 import {
-    deleteCookie, deleteCookieObj,
+    deleteCookieObj,
     findUserByEmail, fromUserToUserResponse,
     generateTokenAndSignInUser,
     isCorrectPassword,
@@ -29,6 +29,7 @@ import {findTokenByAccessToken, revokedTokensByUserId} from "@/app/actions/token
 import {makeCustomError} from "@/utils/makeCustomError";
 import {Role, User} from "@prisma/client";
 import {redirect} from "next/navigation";
+import {CustomError} from "@/utils/customError.util";
 
 export async function changeUserPassword(changeUserPassword: ChangeUserPassword){
     //----> Destructure change-user-password payload.
@@ -243,15 +244,15 @@ export async function changeUserRole(changeRoleOfUser: ChangeUserRole){
         //----> Check for existence of user.
         const user = await findUserByEmail(email);
 
-
         //----> Change the user role.
-        await prisma.user.update({where:{email},
+        const updatedUser = await prisma.user.update({where:{email},
             data: {...user, role}
         });
 
         //----> Send back response.
-        return new ResponseMessage("Role has been changed successfully!", "success", StatusCodes.OK);
+        return updatedUser;
     }catch(error){
+        console.log("At point 4, in change-user-role, error : ", (error as CustomError).message);
         return makeCustomError(error);
     }
 

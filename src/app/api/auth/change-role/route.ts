@@ -8,8 +8,6 @@ export async function PATCH(req:NextRequest){
     //----> Get the change-password payload.
     const changeUserRolePayload = await req.json() as ChangeUserRole;
 
-    console.log("In route for changing user role, payload : ", changeUserRolePayload);
-
     //----> Change user password.
     const response = await changeUserRole(changeUserRolePayload);
 
@@ -19,5 +17,6 @@ export async function PATCH(req:NextRequest){
     }
 
     //----> Send back response.
+
     return NextResponse.json(response, {status: StatusCodes.OK});
 }

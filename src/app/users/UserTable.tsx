@@ -11,6 +11,7 @@ import {Button} from "@/components/ui/button";
 import Link from "next/link";
 import {UserResponse} from "@/app/types/type";
 import {DeleteUserButton} from "@/app/users/DeleteUserButton";
+import {ChangeUserRoleActionButton} from "@/app/users/ChangeUserRoleActionButton";
 
 type Props = {
     users: UserResponse[]
@@ -59,6 +60,7 @@ export default function UserTable({ users }: Props) {
                                     <Link href={`/users/${user.id}/detail`}>Detail</Link>
                                 </Button>
                                 <DeleteUserButton name={user.name} path={`/users/${user.id}/delete`}/>
+                                <ChangeUserRoleActionButton user={user}/>
                             </TableCell>
                         </TableRow>
                     ))}
