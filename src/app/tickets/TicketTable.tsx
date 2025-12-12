@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/table";
 import {Button} from "@/components/ui/button";
 import Link from "next/link";
-import {Customer, Ticket} from "@prisma/client";
+import {Ticket} from "@prisma/client";
 import {CustomerName} from "@/app/tickets/CustomerName";
 import TicketNoteContent from "@/app/tickets/TicketNoteContent";
 import {CompleteActionButton} from "@/app/tickets/job-completed/CompleteActionButton";

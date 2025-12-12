@@ -3,7 +3,7 @@ import {prisma} from "@/app/db/prisma.db";
 import catchError from "http-errors";
 import {StatusCodes} from "http-status-codes";
 import {createToken, revokedTokensByUserId} from "@/app/actions/token.action";
-import {Role, Token, User} from "@prisma/client";
+import {Role, Token, User, TokenType} from "@prisma/client";
 import * as jwt from "jsonwebtoken";
 import {cookies} from "next/headers";
 import {CookieParam} from "@/utils/cookieParam.util";
@@ -20,6 +20,11 @@ export function isCorrectPassword(rawPassword: string, encodedPassword: string) 
     return bcrypt.compare(rawPassword, encodedPassword);
 }
 
+export async function getUserByEmail(email: string) {
+    //----> Fetch the user with the given email.
+    return fromUserToUserResponse(await findUserByEmail(email));
+}
+
 export async function findUserByEmail(email: string){
     //----> Fetch the matching user by user id.
     const user = await prisma.user.findUnique({where:{email}});
@@ -33,7 +38,7 @@ export async function findUserByEmail(email: string){
     return user;
 }
 
-import {TokenType} from "@prisma/client";
+
 
 export function makeNewToken(accessToken: string, refreshToken: string, userId: string) {
     //----> Make new token.

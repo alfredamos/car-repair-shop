@@ -48,6 +48,7 @@ export default function CustomerTable({ customers }: Props) {
                                     src={customer.image}
                                     height={80}
                                     width={80}
+                                    alt={customer.name}
                                 />
                                 </TableCell>
                             <TableCell>{customer.name}</TableCell>

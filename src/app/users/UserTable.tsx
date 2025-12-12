@@ -46,6 +46,7 @@ export default function UserTable({ users }: Props) {
                                     src={user.image}
                                     height={80}
                                     width={80}
+                                    alt={user.name}
                                 />
                             </TableCell>
                             <TableCell>{user.name}</TableCell>

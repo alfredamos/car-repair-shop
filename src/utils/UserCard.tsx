@@ -38,10 +38,10 @@ export function UserCard({ user }: Props): JSX.Element {
                 </div>
                 <Separator className="mt-2"/>
                 <div className="flex flex-col items-center gap-2 md:flex-row md:justify-between h-full mb-5 mt-5">
-                    <Button variant="indigo" size="sm" className="w-full md:flex-1" asChild>
+                    <Button variant="indigo" size="lg" className="w-full md:flex-1" asChild>
                         <Link href="/users">Back</Link>
                     </Button>
-                    <Button variant="rose" size="sm" className="w-full md:flex-1" asChild>
+                    <Button variant="rose" size="lg" className="w-full md:flex-1" asChild>
                         <Link href={`/c/${user.id}/delete`}>Delete</Link>
                     </Button>
                 </div>

@@ -7,7 +7,6 @@ import {StatusCodes} from "http-status-codes";
 import catchError from "http-errors";
 import {getOneTicket} from "@/app/actions/ticket-helper";
 import {adminOrManagerOrOwnerCheckAndUserSession} from "@/app/actions/auth.action";
-import {revalidatePath} from "next/cache";
 
 export async function createTicket(ticket: Ticket) {
     try{
