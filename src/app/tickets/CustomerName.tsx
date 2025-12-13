@@ -1,5 +1,5 @@
 import {Ticket} from "@prisma/client";
-import {getCustomerById} from "@/app/actions/customer.action";
+import {getCustomerById, getCustomerByTicket} from "@/app/actions/customer.action";
 import {CustomError} from "@/utils/customError.util";
 import {TableCell} from "@/components/ui/table";
 
@@ -8,8 +8,10 @@ type Props = {
 }
 
 export async function CustomerName({ ticket }: Props) {
+    console.log("At point, in customer-name, ticket : ", ticket);
     //----> Fetch the customer attached to this ticket.
-    const response = await getCustomerById(ticket.customerId);
+    const response = await getCustomerByTicket(ticket);
+
 
     //----> Check for error.
     if (response instanceof CustomError) {

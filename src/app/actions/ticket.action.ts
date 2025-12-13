@@ -126,7 +126,7 @@ export async function getAllTicketsByEmail(email: string) {
         }
 
         //----> Fetch all tickets.
-        return await prisma.ticket.findMany({where: {tech: email}})
+        return await prisma.ticket.findMany({where: {tech: email}});
     }catch (error) {
         return makeCustomError(error);
     }

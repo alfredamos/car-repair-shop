@@ -1,10 +1,14 @@
 import {getAllTicketsByEmail} from "@/app/actions/ticket.action";
 import {CustomError} from "@/utils/customError.util";
-import TicketsByEmailTable from "@/app/tickets/get-tickets-by-email/[email]/TicketsByEmailTable";
+import TicketsByEmailTable from "@/app/tickets/get-tickets-by-email/[emailParam]/TicketsByEmailTable";
 
-export default async function AllTicketsByEmailPage({params}:{params:Promise<{email:string}>}){
+export default async function AllTicketsByIdPage({params}:{params:Promise<{emailParam:string}>}){
     //----> Get the email from params.
-    const {email} = await params;
+    const {emailParam} = await params;
+
+    //----> Decode email from email-param.
+    const email = decodeURIComponent(emailParam);
+
     //----> Fetch all tickets.
     const response = await getAllTicketsByEmail(email);
 

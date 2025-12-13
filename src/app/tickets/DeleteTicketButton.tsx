@@ -7,18 +7,20 @@ import axios from "axios";
 type Props = {
     path: string;
     title: string;
+    identifier: string;
+    tech: string;
 }
 
-export function DeleteTicketButton({ title, path }: Props) {
+export function DeleteTicketButton({ identifier, tech, title, path }: Props) {
     const router = useRouter();
 
     const onCancel = () => {
-        router.push("/tickets");
+        router.push(`${identifier === "Admin" ? "/tickets" : `/tickets/get-tickets-by-email/${tech}`}`);
     }
 
     const onSubmit = async () => {
         await axios.delete(path);
-        router.push("/tickets");
+        router.push(`${identifier === "Admin" ? "/tickets" : `/tickets/get-tickets-by-email/${tech}`}`);
     }
 
     return (

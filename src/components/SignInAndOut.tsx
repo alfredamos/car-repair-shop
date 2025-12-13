@@ -7,7 +7,7 @@ import {NavigationMenuItem, NavigationMenuLink, NavigationMenuList} from "@/comp
 import {Button} from "@/components/ui/button";
 import {LocalStorageParam} from "@/utils/LocalStorageParam";
 import {logoutUser} from "@/app/actions/auth.action";
-import {settingItems} from "@/utils/settingItems";
+import {getAllSettingItems, NavLinkType, settingItems} from "@/utils/settingItems";
 import {MenuDropdown} from "@/components/MenuDropdown";
 import {adminItems} from "@/utils/adminItems";
 import {ModeToggle} from "@/components/theme-toggler";
@@ -46,7 +46,7 @@ export default function SignInAndOut() {
                   </NavigationMenuItem>) : ""}
 
                    <NavigationMenuItem className="hover:bg-black hover:text-white focus:outline-none gap-2 px-4 pt-1 pb-2 rounded-md">
-                       <MenuDropdown items={settingItems} title="Settings" subTitle="My Account" />
+                       <MenuDropdown items={getAllSettingItems(authSession?.email as string)} title="Settings" subTitle="My Account" />
 
                    </NavigationMenuItem>
                    <NavigationMenuItem>

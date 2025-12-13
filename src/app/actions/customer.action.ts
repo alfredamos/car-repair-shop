@@ -1,6 +1,6 @@
 "use server"
 
-import {Customer} from "@prisma/client"
+import {Customer, Ticket} from "@prisma/client"
 import {prisma} from "@/app/db/prisma.db";
 import {makeCustomError} from "@/utils/makeCustomError";
 import {StatusCodes} from "http-status-codes";
@@ -89,11 +89,30 @@ export async function getCustomerById(id: string) {
 
         //----> You must be an admin or manager to view this page.
         if (!isAdminOrManager()){
+            console.log("get-Customer-By-Id, you are not allowed");
             throw catchError(StatusCodes.FORBIDDEN, "You don't have the permission to view this page!");
         }
 
         //----> Check for existence of customer.
         return await getOneCustomer(id);
+
+    }catch(error){
+        return makeCustomError(error);
+    }
+}
+
+export async function getCustomerByTicket(ticket: Ticket) {
+    try {
+        const {isAdminOrManager, ownerCheckByEmailOrAdmin} = await adminOrManagerOrOwnerCheckAndUserSession()
+
+        //----> You must be an admin or manager to view this page.
+        if (!isAdminOrManager() && !ownerCheckByEmailOrAdmin(ticket.tech)){
+            console.log("get-Customer-By-Id, you are not allowed");
+            throw catchError(StatusCodes.FORBIDDEN, "You don't have the permission to view this page!");
+        }
+
+        //----> Check for existence of customer.
+        return await getOneCustomer(ticket.customerId);
 
     }catch(error){
         return makeCustomError(error);

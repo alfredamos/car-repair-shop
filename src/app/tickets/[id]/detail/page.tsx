@@ -1,6 +1,6 @@
 import {getTicketById} from "@/app/actions/ticket.action";
 import {CustomError} from "@/utils/customError.util";
-import {getCustomerById} from "@/app/actions/customer.action";
+import {getCustomerByTicket} from "@/app/actions/customer.action";
 import {getUserByEmail} from "@/app/actions/auth-helpers";
 import {TicketCard} from "@/utils/TicketCard";
 
@@ -17,7 +17,7 @@ export default async function TicketDetailPage({params}: {params: Promise<{id: s
     }
 
     //----> Get the customer and user associated with this ticket.
-    const [customerResponse, userResponse] = await Promise.all([getCustomerById(response.customerId), getUserByEmail(response.tech)])
+    const [customerResponse, userResponse] = await Promise.all([getCustomerByTicket(response), getUserByEmail(response.tech)])
 
     //----> Check for error.
     if (customerResponse instanceof CustomError) {

@@ -1,7 +1,7 @@
 import {Button} from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import Link from "next/link";
-import {Customer, Ticket} from "@prisma/client";
+import {Customer, Role, Ticket} from "@prisma/client";
 import {UserResponse} from "@/app/types/type";
 import {Check, X} from "lucide-react";
 
@@ -12,6 +12,7 @@ type Props = {
 }
 
 export function TicketCard({ customer, ticket, user }: Props) {
+    const isAdmin = user.role === Role.Admin;
     return (
         <div className="flex flex-col max-w-sm mx-auto my-auto mt-10 ring-2 ring-gray-300 dark:text-gray-400 dark:ring-gray-600 p-2 rounded-t-md mb-10 shadow-xl">
             <div className="flex items-center justify-between">
@@ -50,7 +51,7 @@ export function TicketCard({ customer, ticket, user }: Props) {
                 <Separator className="mt-2"/>
                 <div className="flex flex-col items-center gap-2 md:flex-row md:justify-between h-full mb-5 mt-5">
                     <Button variant="indigo" size="lg" className="w-full md:flex-1" asChild>
-                        <Link href="/tickets">Back</Link>
+                        <Link href={`${isAdmin ? "/tickets" : `/tickets/get-tickets-by-email/${user.email}`}`}>Back</Link>
                     </Button>
                     <Button variant="back" size="lg" className="w-full md:flex-1" asChild>
                         <Link href={`/tickets/${customer.id}/edit`}>Edit</Link>
