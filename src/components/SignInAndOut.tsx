@@ -18,7 +18,6 @@ export default function SignInAndOut() {
     const {authSession} = useAuthContext();
     const {getLocalStorage, removeLocalStorage} = useLocalStorage<UserSession>()
 
-    const [isLoading, setIsLoading] = useState(false);
     const [isLoggedIn, setIsLoggedIn] = useState(authSession?.isLoggedIn ?? getLocalStorage(LocalStorageParam.authSession)?.isLoggedIn);
     const [isAdmin, setIsAdmin] = useState(authSession?.isAdmin ?? getLocalStorage(LocalStorageParam.authSession)?.isAdmin);
 
@@ -46,7 +45,7 @@ export default function SignInAndOut() {
                   </NavigationMenuItem>) : ""}
 
                    <NavigationMenuItem className="hover:bg-black hover:text-white focus:outline-none gap-2 px-4 pt-1 pb-2 rounded-md">
-                       <MenuDropdown items={getAllSettingItems(authSession?.email as string)} title="Settings" subTitle="My Account" />
+                       <MenuDropdown items={getAllSettingItems(authSession?.email as string, isAdmin)} title="Settings" subTitle="My Account" />
 
                    </NavigationMenuItem>
                    <NavigationMenuItem>

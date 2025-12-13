@@ -5,20 +5,21 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu";
-import {JSX} from "react";
+import {JSX, MouseEventHandler} from "react";
 import {NavLink} from "@/components/NavLink";
 
 
 interface Props {
+    onMouseLeave?: () => MouseEventHandler<HTMLButtonElement>;
     title: string;
     subTitle: string;
     items: Array<{ href: string; label: string }>;
 }
 
-export function MenuDropdown({title, subTitle, items}: Props): JSX.Element {
+export function MenuDropdown({onMouseLeave, title, subTitle, items}: Props): JSX.Element {
     return (
         <DropdownMenu>
-            <DropdownMenuTrigger className="focus:outline-none">{title}</DropdownMenuTrigger>
+            <DropdownMenuTrigger onMouseLeave={onMouseLeave} className="focus:outline-none">{title}</DropdownMenuTrigger>
             <DropdownMenuContent>
                 <DropdownMenuLabel>{subTitle}</DropdownMenuLabel>
                 <DropdownMenuSeparator />

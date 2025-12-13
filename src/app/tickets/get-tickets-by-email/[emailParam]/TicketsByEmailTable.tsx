@@ -13,6 +13,7 @@ import {Ticket} from "@prisma/client";
 import {CustomerName} from "@/app/tickets/CustomerName";
 import TicketNoteContent from "@/app/tickets/TicketNoteContent";
 import {DeleteTicketButton} from "@/app/tickets/DeleteTicketButton";
+import {CompleteActionButton} from "@/app/tickets/job-completed/CompleteActionButton";
 
 type Props = {
     tickets: Ticket[];
@@ -46,7 +47,7 @@ export default function TicketsByEmailTable({ tickets }: Props) {
     <Button variant="indigo" type="button" size="sm" className="m-2">
     <Link href={`/tickets/${ticket.id}/detail`}>Detail</Link>
     </Button>
-    <DeleteTicketButton identifier="User" tech={ticket.tech} title={ticket.title} path={`/api/tickets/${ticket.id}`}/>
+    <CompleteActionButton identifier="User" ticket={ticket}/>
     </TableCell>
     </TableRow>
 ))}

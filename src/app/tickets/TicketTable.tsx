@@ -58,7 +58,7 @@ export default function TicketTable({ tickets}: Props) {
                                     <Link href={`/tickets/${ticket.id}/edit`}>Edit</Link>
                                 </Button>
                                 <DeleteTicketButton identifier="Admin" tech={ticket.tech} title={ticket.title} path={`/api/tickets/${ticket.id}`}/>
-                                <CompleteActionButton ticket={ticket}/>
+                                <CompleteActionButton identifier="Admin" ticket={ticket}/>
                             </TableCell>
                         </TableRow>
                     ))}

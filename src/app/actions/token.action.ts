@@ -4,7 +4,7 @@ import {Token} from "@prisma/client"
 import {prisma} from "@/app/db/prisma.db";
 import {ResponseMessage} from "@/utils/responseMessage.util";
 import {CustomError} from "@/utils/customError.util";
-import {QueryConditionUtil} from "@/utils/queryCondition.util";
+import {QueryCondition} from "@/utils/queryCondition";
 import {
     deletedTokensByQuery,
     findInvalidOrValidTokens,
@@ -36,7 +36,7 @@ export async function deleteInvalidTokensByUserId(userId: string){
         }
 
         //----> Retrieve invalid tokens by user id.
-        const queryCondition: QueryConditionUtil = {
+        const queryCondition: QueryCondition = {
             userId,
             expired: true,
             revoked: true
@@ -61,7 +61,7 @@ export async function  deleteAllInvalidTokens(){
             throw new CustomError("Forbidden", "You don't permission to view or perform this action!", StatusCodes.FORBIDDEN)
         }
         //----> Retrieve all invalid tokens.
-        const queryCondition: QueryConditionUtil = {
+        const queryCondition: QueryCondition = {
             expired: true,
             revoked: true
         };
@@ -94,7 +94,7 @@ export async function findTokenByAccessToken(accessToken: string){
 
 export async function findAllValidTokensByUserId(userId: string){
     //----> Retrieve all valid tokens.
-    const queryCondition : QueryConditionUtil = {
+    const queryCondition : QueryCondition = {
         userId,
         revoked:false,
         expired:false

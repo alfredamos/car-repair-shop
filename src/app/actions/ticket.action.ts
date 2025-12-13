@@ -7,6 +7,9 @@ import {StatusCodes} from "http-status-codes";
 import catchError from "http-errors";
 import {getOneTicket} from "@/app/actions/ticket-helper";
 import {adminOrManagerOrOwnerCheckAndUserSession} from "@/app/actions/auth.action";
+import {QueryCondition} from "@/utils/queryCondition";
+import {id} from "zod/locales";
+import {TicketQueryCondition} from "@/utils/TicketQueryCondition";
 
 export async function createTicket(ticket: Ticket) {
     try{
@@ -116,7 +119,7 @@ export async function getAllTickets() {
     }
 }
 
-export async function getAllTicketsByEmail(email: string) {
+export async function getTicketsByEmail(email: string) {
     try {
         const {ownerCheckByEmailOrAdmin} = await adminOrManagerOrOwnerCheckAndUserSession();
 
@@ -126,7 +129,10 @@ export async function getAllTicketsByEmail(email: string) {
         }
 
         //----> Fetch all tickets.
-        return await prisma.ticket.findMany({where: {tech: email}});
+        const ticketQuery : TicketQueryCondition = {
+            tech: email
+        }
+        return await getTicketsByGivenQueryCondition(ticketQuery);
     }catch (error) {
         return makeCustomError(error);
     }
@@ -153,4 +159,27 @@ export async function ticketJobCompleted(id: string) {
        return makeCustomError(error);
     }
 
+}
+
+export async function getTicketsByTicketQuery(query: TicketQueryCondition) {
+    try {
+        const {ownerCheckByEmailOrAdmin, isAdmin} = await adminOrManagerOrOwnerCheckAndUserSession();
+
+        //----> You must be an admin or manager to view this page.
+        const email = query?.tech;
+        if (!ownerCheckByEmailOrAdmin(email as string) && !isAdmin){
+            throw catchError(StatusCodes.FORBIDDEN, "You don't have the permission to view this page!");
+        }
+
+        //----> Fetch all tickets.
+        return await getTicketsByGivenQueryCondition(query);
+    }catch (error) {
+        return makeCustomError(error);
+    }
+}
+
+
+async function getTicketsByGivenQueryCondition(queryCondition: TicketQueryCondition){
+    //----> Fetch all tickets.
+    return await prisma.ticket.findMany({where: queryCondition});
 }

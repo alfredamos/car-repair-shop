@@ -3,10 +3,12 @@ import {CustomError} from "@/utils/customError.util";
 import {getCustomerByTicket} from "@/app/actions/customer.action";
 import {getUserByEmail} from "@/app/actions/auth-helpers";
 import {TicketCard} from "@/utils/TicketCard";
+import {getSession} from "@/app/actions/auth.action";
 
 export default async function TicketDetailPage({params}: {params: Promise<{id: string}>}){
     //----> Get the id params.
     const {id} = await params;
+    const {isAdmin} = await getSession();
 
     //----> Get the ticket with the given id.
     const response = await getTicketById(id);
@@ -30,6 +32,6 @@ export default async function TicketDetailPage({params}: {params: Promise<{id: s
     }
 
     return (
-        <TicketCard ticket={response} customer={customerResponse} user={userResponse}/>
+        <TicketCard isAdmin={isAdmin} ticket={response} customer={customerResponse} user={userResponse}/>
     );
 }

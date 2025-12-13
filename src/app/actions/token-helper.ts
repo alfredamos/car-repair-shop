@@ -2,12 +2,12 @@
 
 import {Token, TokenType} from "@prisma/client";
 import {prisma} from "@/app/db/prisma.db";
-import {QueryConditionUtil} from "@/utils/queryCondition.util";
+import {QueryCondition} from "@/utils/queryCondition";
 import {StatusCodes} from "http-status-codes";
 import {ResponseMessage} from "@/utils/responseMessage.util";
 import {CustomError} from "@/utils/customError.util";
 
-export  async function deletedTokensByQuery(queryCondition: QueryConditionUtil) {
+export  async function deletedTokensByQuery(queryCondition: QueryCondition) {
     const invalidTokens = findInvalidOrValidTokens(queryCondition);
 
     //----> Collect all invalid tokens id in an array.
@@ -31,7 +31,7 @@ export  async function deletedTokensByQuery(queryCondition: QueryConditionUtil) 
     return new ResponseMessage("All invalid tokens have been deleted!", "success", StatusCodes.OK);
 }
 
-export async function findInvalidOrValidTokens(queryCondition: QueryConditionUtil) {
+export async function findInvalidOrValidTokens(queryCondition: QueryCondition) {
     //----> Retrieve valid or invalid tokens.
     return prisma.token.findMany({where: queryCondition});
 }

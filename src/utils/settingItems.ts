@@ -1,3 +1,5 @@
+import {Role} from "@prisma/client";
+
 export type NavLinkType = {
     href: string;
     label: string;
@@ -11,9 +13,9 @@ export const settingItems = [
     { href: '/tickets', label: 'Tickets' },
 ];
 
-export function getAllSettingItems(email: string) {
+export function getAllSettingItems(email: string, isAdmin: boolean) {
     return settingItems.map(item => {
-        if (item.href === "/tickets" && item.label === "Tickets") {
+        if ((item.href === "/tickets") && (item.label === "Tickets") && !isAdmin) {
             //----> Encode email
             const encodedEmail = encodeURIComponent(email);
             console.log("get-all-settings-items, encodedEmail : ", encodedEmail);

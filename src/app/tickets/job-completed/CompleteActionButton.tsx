@@ -7,20 +7,21 @@ import axios from "axios";
 
 type Props = {
     ticket: Ticket;
+    identifier: string;
 }
 
-export function CompleteActionButton({ ticket }: Props) {
+export function CompleteActionButton({ identifier, ticket }: Props) {
     const router = useRouter();
 
     const completeAndUnCompleteAction = async () => {
         await axios.patch(`/api/tickets/job-completed/${ticket.id}`, {})
-        router.push("/tickets");
+        router.push(`${identifier === "Admin" ? "/tickets" : `/tickets/get-tickets-by-email/${ticket.tech}`}`);
 
     }
 
     return (
         <Button variant="success" type="button" size="sm" className="m-2" onClick={completeAndUnCompleteAction}>
-                {ticket.completed ? "Done" : "Undo"}
+                {ticket.completed ? "Undo" : "Done"}
         </Button>
     );
 }

@@ -6,13 +6,13 @@ import {UserResponse} from "@/app/types/type";
 import {Check, X} from "lucide-react";
 
 type Props = {
-    ticket: Ticket;
     customer: Customer;
+    isAdmin: boolean;
+    ticket: Ticket;
     user: UserResponse;
 }
 
-export function TicketCard({ customer, ticket, user }: Props) {
-    const isAdmin = user.role === Role.Admin;
+export function TicketCard({ customer, isAdmin, ticket, user }: Props) {
     return (
         <div className="flex flex-col max-w-sm mx-auto my-auto mt-10 ring-2 ring-gray-300 dark:text-gray-400 dark:ring-gray-600 p-2 rounded-t-md mb-10 shadow-xl">
             <div className="flex items-center justify-between">
@@ -54,7 +54,7 @@ export function TicketCard({ customer, ticket, user }: Props) {
                         <Link href={`${isAdmin ? "/tickets" : `/tickets/get-tickets-by-email/${user.email}`}`}>Back</Link>
                     </Button>
                     <Button variant="back" size="lg" className="w-full md:flex-1" asChild>
-                        <Link href={`/tickets/${customer.id}/edit`}>Edit</Link>
+                        <Link href={`/tickets/${ticket.id}/edit`}>Edit</Link>
                     </Button>
                 </div>
             </div>
