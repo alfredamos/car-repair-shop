@@ -1,3 +1,5 @@
+"use client"
+
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -5,22 +7,25 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu";
-import {JSX, MouseEventHandler} from "react";
 import {NavLink} from "@/components/NavLink";
+import {useState} from "react";
 
 
 interface Props {
-    onMouseLeave?: () => MouseEventHandler<HTMLButtonElement>;
     title: string;
     subTitle: string;
     items: Array<{ href: string; label: string }>;
 }
 
-export function MenuDropdown({onMouseLeave, title, subTitle, items}: Props): JSX.Element {
+export function MenuDropdown({ title, subTitle, items}: Props) {
+    const [openDropdown, setOpenDropdown] = useState(false);
     return (
-        <DropdownMenu>
-            <DropdownMenuTrigger onMouseLeave={onMouseLeave} className="focus:outline-none">{title}</DropdownMenuTrigger>
-            <DropdownMenuContent>
+        <DropdownMenu  open={openDropdown}
+                       onOpenChange={() => setOpenDropdown(false)}
+                       modal={false}
+        >
+            <DropdownMenuTrigger   onMouseEnter={() => setOpenDropdown(true)} className="focus:outline-none">{title}</DropdownMenuTrigger>
+            <DropdownMenuContent onMouseLeave={() => setOpenDropdown(false)} >
                 <DropdownMenuLabel>{subTitle}</DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 {

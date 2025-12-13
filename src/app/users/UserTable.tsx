@@ -18,6 +18,11 @@ type Props = {
 }
 
 export default function UserTable({ users }: Props) {
+    //----> Check for empty array of users.
+    if (users?.length === 0) {
+        return <div className="h-dvh flex justify-center items-center"><h1 className="font-bold p-10 bg-red-200 ring-1 ring-red-200 rounded-lg shadow-lg text-black">There are no users to display at this time!</h1></div>
+    }
+
     return (
         <div className="mt-10 max-w-sm md:max-w-2xl mx-auto">
             <div className="flex items-center justify-between">
