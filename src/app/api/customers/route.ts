@@ -22,8 +22,6 @@ export async function POST(req: NextRequest, ){
     //-----> Get the customer payload.
     const customerPayload = await req.json() as Customer;
 
-    console.log("Create-customer-route , customerPayload : ", customerPayload);
-
     //----> Create new customer.
     const response = await createCustomer(customerPayload);
 

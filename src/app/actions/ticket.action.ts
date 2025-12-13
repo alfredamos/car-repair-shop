@@ -155,7 +155,6 @@ export async function ticketJobCompleted(id: string) {
         //----> Send back the response.
         return updatedTicket;
     }catch(error){
-       console.error(error);
        return makeCustomError(error);
     }
 

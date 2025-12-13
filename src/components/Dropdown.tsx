@@ -31,7 +31,7 @@ const DropdownItem = ({ href, children}: DropdownItemProps) => {
         setLocalStorage(LocalStorageParam.authSession, storedResponse);
 
         } catch (error) {
-            console.error(error); //----> Show toast for successful login.
+            console.error(error);
         }finally{
             redirect("/");
         }

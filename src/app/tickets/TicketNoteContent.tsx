@@ -9,7 +9,6 @@ type Prop = {
 }
 
 export default function TicketNoteContent({content}: Prop): JSX.Element {
-    console.log(content);
     const [showFullContent, setShowFullContent] = useState(false);
     const truncatedLength = 10; // Define your desired truncation length
 

@@ -8,7 +8,6 @@ type Props = {
 }
 
 export async function CustomerName({ ticket }: Props) {
-    console.log("At point, in customer-name, ticket : ", ticket);
     //----> Fetch the customer attached to this ticket.
     const response = await getCustomerByTicket(ticket);
 

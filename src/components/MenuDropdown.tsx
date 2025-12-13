@@ -19,6 +19,7 @@ interface Props {
 
 export function MenuDropdown({ title, subTitle, items}: Props) {
     const [openDropdown, setOpenDropdown] = useState(false);
+
     return (
         <DropdownMenu  open={openDropdown}
                        onOpenChange={() => setOpenDropdown(false)}

@@ -89,7 +89,6 @@ export async function getCustomerById(id: string) {
 
         //----> You must be an admin or manager to view this page.
         if (!isAdminOrManager()){
-            console.log("get-Customer-By-Id, you are not allowed");
             throw catchError(StatusCodes.FORBIDDEN, "You don't have the permission to view this page!");
         }
 
@@ -107,7 +106,6 @@ export async function getCustomerByTicket(ticket: Ticket) {
 
         //----> You must be an admin or manager to view this page.
         if (!isAdminOrManager() && !ownerCheckByEmailOrAdmin(ticket.tech)){
-            console.log("get-Customer-By-Id, you are not allowed");
             throw catchError(StatusCodes.FORBIDDEN, "You don't have the permission to view this page!");
         }
 

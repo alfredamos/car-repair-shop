@@ -20,7 +20,6 @@ type Props = {
 export default function EditProfileForm({user}: Props) {
     const router = useRouter();
     async function onSubmit(values: EditUserProfile) {
-        console.log("Form submitted with values:", values);
         await editUserProfile(values);
         redirect("/")
     }

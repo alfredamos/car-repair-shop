@@ -26,19 +26,15 @@ export function CustomerForm({defaultValues, formLabel, id}: Props) {
     async function onSubmit(values: CustomerValidate) {
 
         if (formLabel === "Create") {
-            console.log("Form submitted with values:", values);
             const customerResponse = await createCustomer(values as unknown as Customer);
 
            if (customerResponse instanceof CustomError) throw customerResponse;
 
-           console.log("In create customer form, customer : ", customerResponse);
         }else if (formLabel === "Edit") {
             values.id = id;
-            console.log("Form submitted with values:", values);
             const customerResponse = await editCustomerById(id!, values as unknown as Customer);
 
            if (customerResponse instanceof CustomError) throw customerResponse;
-           console.log("In edit customer form, customer : ", customerResponse);
         }
 
 

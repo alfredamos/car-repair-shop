@@ -20,7 +20,6 @@ export default function LoginForm(){
     const {setLocalStorage} = useLocalStorage<UserResponse>()
 
     async function onSubmit(values: LoginUser) {
-        console.log("Form submitted with values:", values);
         const response = await loginUser(values);
 
         if (response instanceof CustomError) {

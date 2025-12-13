@@ -42,8 +42,6 @@ export async function deleteInvalidTokensByUserId(userId: string){
             revoked: true
         };
 
-        console.log("In delete-invalid-tokens, queryCondition : ", queryCondition);
-
         //----> Delete all invalid tokens by user id.
         return await deletedTokensByQuery(queryCondition);
     }catch(error){

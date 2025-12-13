@@ -17,7 +17,6 @@ type Props = {
 export default function ChangePasswordForm({email}: Props) {
     const router = useRouter();
     async function onSubmit(values: ChangeUserPassword) {
-        console.log("Form submitted with values:", values);
         await changeUserPassword(values);
         redirect("/")
     }

@@ -34,21 +34,17 @@ export function TicketForm({customers, defaultValues, formLabel, users, id}: Pro
     });
 
     async function onSubmit(values: TicketValidate) {
-        console.log("Form submitted with values:", values);
-
         if (formLabel === "Create") {
             const response = await createTicket(values as unknown as Ticket);
 
             if (response instanceof CustomError) throw response;
 
-            console.log("Add-ticket-form, response : ", response);
         }else if (formLabel === "Edit") {
             values.id = id;
             const response = await editTicketById(id!, values as unknown as Ticket);
 
             if (response instanceof CustomError) throw response;
 
-            console.log("Edit-ticket-form, response : ", response);
         }
 
         redirect("/tickets")

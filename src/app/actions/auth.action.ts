@@ -61,7 +61,6 @@ export async function changeUserPassword(changeUserPassword: ChangeUserPassword)
         //----> Send back response.
         return new ResponseMessage("Password has been changed successfully!", "success", StatusCodes.OK);
     }catch (error){
-        console.error(error);
         return makeCustomError(error);
     }
 
@@ -89,7 +88,6 @@ export async function editUserProfile(editUser: EditUserProfile){
         //----> Send back response.
         return new ResponseMessage("Profile has been changed successfully!", "success", StatusCodes.OK);
     }catch(error){
-        console.error(error);
         return makeCustomError(error);
     }
 
@@ -146,12 +144,8 @@ export async function logoutUser(){
         //----> Get access-token.
         const {accessToken} = await getAccessToken();
 
-        console.log("In log-out, accessToken : ", accessToken);
-
         //----> Fetch token object with the given access-token
         const tokenObj = await findTokenByAccessToken(accessToken);
-
-        console.log("In log-out, tokenObj : ", tokenObj);
 
         //----> Check for null tokenObject.
         if (!tokenObj) {
@@ -179,9 +173,6 @@ export async function refreshUserToken(){
         const cookieStore = await cookies();
         const refreshToken = cookieStore.get(CookieParam.refreshTokenName)?.value as string;
 
-        console.log("Refresh User, cookieStore: ", cookieStore);
-        console.log("Refresh token : ", refreshToken);
-
         //----> Check for validity of token.
         const tokenJwt = validateUserToken(refreshToken);
 
@@ -194,7 +185,6 @@ export async function refreshUserToken(){
 }
 
 export async function signupUser(signup: SignupUser){
-    console.log("In signup-action, signup :", signup);
     //----> Destructure change-user-password payload.
     const {password, confirmPassword, email} = signup;
     const {confirmPassword : cfmPassword, ...rest} = signup;
@@ -252,7 +242,6 @@ export async function changeUserRole(changeRoleOfUser: ChangeUserRole){
         //----> Send back response.
         return updatedUser;
     }catch(error){
-        console.log("At point 4, in change-user-role, error : ", (error as CustomError).message);
         return makeCustomError(error);
     }
 

@@ -62,7 +62,7 @@ export async function generateTokenAndSignInUser(user: TokenJwt){
 
     //----> Generate refresh token and store it in cookie.
     const refreshToken = await generateToken(id, name, email, role, CookieParam.refreshTokenExpireIn);
-    console.log("In generate, Refresh token : ", refreshToken);
+
     await setCookie(CookieParam.refreshTokenName, refreshToken, CookieParam.refreshTokenPath, CookieParam.refreshTokenExpireIn);
 
     //----> Make token object and store it in token db.

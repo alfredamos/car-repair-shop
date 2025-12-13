@@ -14,7 +14,6 @@ import {Separator} from "@/components/ui/separator";
 
 export default function SignupForm() {
     async function onSubmit(values: SignupUser) {
-        console.log("Form submitted with values:", values);
         await signupUser(values);
         redirect("/")
     }

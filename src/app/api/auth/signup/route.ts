@@ -7,8 +7,6 @@ export async function POST(req:NextRequest){
     //----> Get the signup-user payload.
     const signupPayload = await req.json() as SignupUser;
 
-    console.log("In signup-route, signup :", signupPayload);
-
     //----> Signup new user.
     const response = await signupUser(signupPayload);
 

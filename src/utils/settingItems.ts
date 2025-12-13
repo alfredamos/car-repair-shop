@@ -18,7 +18,7 @@ export function getAllSettingItems(email: string, isAdmin: boolean) {
         if ((item.href === "/tickets") && (item.label === "Tickets") && !isAdmin) {
             //----> Encode email
             const encodedEmail = encodeURIComponent(email);
-            console.log("get-all-settings-items, encodedEmail : ", encodedEmail);
+
             return {
                 href: `/tickets/get-tickets-by-email/${encodedEmail}`,
                 label: item.label,
