@@ -3,16 +3,13 @@ import {CustomError} from "@/utils/customError.util";
 import TicketsByEmailTable from "@/app/tickets/get-tickets-by-email/[emailParam]/TicketsByEmailTable";
 import {TicketQueryCondition} from "@/utils/TicketQueryCondition";
 
-export default async function AllTicketsByIdPage({params}:{params:Promise<{emailParam:string}>}){
+export default async function AllTicketsByCustomerIdPage({params}:{params:Promise<{customerId:string}>}){
     //----> Get the email from params.
-    const {emailParam} = await params;
-
-    //----> Decode email from email-param.
-    const email = decodeURIComponent(emailParam);
+    const {customerId} = await params;
 
     //----> Fetch all tickets by email query.
     const query : TicketQueryCondition = {
-        tech: email
+        customerId
     }
     const response = await getTicketsByTicketQuery(query)
 

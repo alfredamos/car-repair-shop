@@ -70,6 +70,9 @@ export default function CustomerTable({ customers }: Props) {
                                     <Link href={`/customers/${customer.id}/edit`}>Edit</Link>
                                 </Button>
                                 <DeleteCustomerButton name={customer.name} path={`/customers/${customer.id}/delete`}/>
+                                <Button type="button" size="sm" className="m-2">
+                                    <Link href={`/customers/get-tickets-by-customer-id/${customer.id}`}>Tickets</Link>
+                                </Button>
                             </TableCell>
                         </TableRow>
                     ))}

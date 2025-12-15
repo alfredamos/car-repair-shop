@@ -12,7 +12,6 @@ import Link from "next/link";
 import {Ticket} from "@prisma/client";
 import {CustomerName} from "@/app/tickets/CustomerName";
 import TicketNoteContent from "@/app/tickets/TicketNoteContent";
-import {DeleteTicketButton} from "@/app/tickets/DeleteTicketButton";
 import {CompleteActionButton} from "@/app/tickets/job-completed/CompleteActionButton";
 
 type Props = {
