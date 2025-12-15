@@ -66,6 +66,9 @@ export default function UserTable({ users }: Props) {
                                 </Button>
                                 <DeleteUserButton name={user.name} path={`/users/${user.id}/delete`}/>
                                 <ChangeUserRoleActionButton user={user}/>
+                                <Button variant="back" type="button" size="sm" className="m-2">
+                                    <Link href={`/tickets/get-tickets-by-email/${encodeURIComponent(user.email)}`}>Tickets</Link>
+                                </Button>
                             </TableCell>
                         </TableRow>
                     ))}
