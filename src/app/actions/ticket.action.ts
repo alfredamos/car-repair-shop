@@ -7,8 +7,6 @@ import {StatusCodes} from "http-status-codes";
 import catchError from "http-errors";
 import {getOneTicket} from "@/app/actions/ticket-helper";
 import {adminOrManagerOrOwnerCheckAndUserSession} from "@/app/actions/auth.action";
-import {QueryCondition} from "@/utils/queryCondition";
-import {id} from "zod/locales";
 import {TicketQueryCondition} from "@/utils/TicketQueryCondition";
 
 export async function createTicket(ticket: Ticket) {

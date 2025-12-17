@@ -7,6 +7,35 @@ import {StatusCodes} from "http-status-codes";
 import catchError from "http-errors";
 import {getOneCustomer} from "@/app/actions/customer-helper";
 import {adminOrManagerOrOwnerCheckAndUserSession} from "@/app/actions/auth.action";
+import {TicketQueryCondition} from "@/utils/TicketQueryCondition";
+import {CustomerQueryCondition} from "@/app/types/type";
+
+export async function activateOrDeactivateCustomer(id: string){
+    try{
+        const {isAdminOrManager, session} = await adminOrManagerOrOwnerCheckAndUserSession();
+
+        //----> You must be an admin or manager to create a customer.
+        if (!isAdminOrManager()) {
+            throw catchError(StatusCodes.FORBIDDEN, "You don't have the permission to create a customer!");
+        }
+
+        //----> Fetch the customer to activate.
+        const customer = await getOneCustomer(id);
+
+        //----> Store the new-customer in the db.
+        customer.active = !customer.active;
+        const newCustomer = await prisma.customer.update({
+            where: {id},
+            data: {...customer}
+        });
+
+        //----> Send back response.
+        return newCustomer;
+    }catch(error){
+        return makeCustomError(error);
+    }
+
+}
 
 export async function createCustomer(customer: Customer) {
     try{
@@ -131,4 +160,43 @@ export async function getAllCustomers() {
     }catch (error) {
         return makeCustomError(error);
     }
+}
+
+export async function getAllActiveCustomers() {
+    try {
+        const {isAdminOrManager} = await adminOrManagerOrOwnerCheckAndUserSession();
+
+        //----> You must be an admin or manager to view this page.
+        if (!isAdminOrManager()){
+            throw catchError(StatusCodes.FORBIDDEN, "You don't have the permission to view this page!");
+        }
+
+        //----> Fetch all customers.
+        const query : CustomerQueryCondition = {active: true};
+        return await getCustomersByQueryCondition(query);
+    }catch (error) {
+        return makeCustomError(error);
+    }
+}
+
+export async function getAllInActiveCustomers() {
+    try {
+        const {isAdminOrManager} = await adminOrManagerOrOwnerCheckAndUserSession();
+
+        //----> You must be an admin or manager to view this page.
+        if (!isAdminOrManager()){
+            throw catchError(StatusCodes.FORBIDDEN, "You don't have the permission to view this page!");
+        }
+
+        //----> Fetch all customers.
+        const query : CustomerQueryCondition = {active: false};
+        return await getCustomersByQueryCondition(query);
+    }catch (error) {
+        return makeCustomError(error);
+    }
+}
+
+async function getCustomersByQueryCondition(query: CustomerQueryCondition){
+    //----> Fetch customers matching by given query.
+    return await prisma.customer.findMany({where: query});
 }

@@ -27,3 +27,7 @@ type UserResponse = {
     gender: Gender;
     image: string;
 }
+
+type CustomerQueryCondition = {
+    active: boolean;
+}

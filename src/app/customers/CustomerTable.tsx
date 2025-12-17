@@ -12,6 +12,7 @@ import {formattedDate} from "@/utils/formattedDate";
 import {Button} from "@/components/ui/button";
 import Link from "next/link";
 import {DeleteCustomerButton} from "@/app/customers/DeleteCustomerButton";
+import {ActiveOrInactiveActionButton} from "@/app/customers/ActiveOrInactiveActionButton";
 
 type Props = {
     customers: Customer[]
@@ -42,6 +43,7 @@ export default function CustomerTable({ customers }: Props) {
                         <TableHead className="text-right">Address</TableHead>
                         <TableHead className="text-right">Gender</TableHead>
                         <TableHead className="text-right">Birthdate</TableHead>
+                        <TableHead className="text-right">Active</TableHead>
                         <TableHead>Actions</TableHead>
                     </TableRow>
                 </TableHeader>
@@ -62,6 +64,7 @@ export default function CustomerTable({ customers }: Props) {
                             <TableCell className="text-right">{customer.address}</TableCell>
                             <TableCell className="text-right">{customer.gender}</TableCell>
                             <TableCell className="text-right">{formattedDate(customer.dateOfBirth)}</TableCell>
+                            <TableCell className="text-right">{customer.active ? "Active" : "Inactivate"}</TableCell>
                             <TableCell className="w-1/3">
                                 <Button variant="indigo" type="button" size="sm" className="m-2">
                                     <Link href={`/customers/${customer.id}/detail`}>Detail</Link>
@@ -73,6 +76,7 @@ export default function CustomerTable({ customers }: Props) {
                                 <Button type="button" size="sm" className="m-2">
                                     <Link href={`/customers/get-tickets-by-customer-id/${customer.id}`}>Tickets</Link>
                                 </Button>
+                                <ActiveOrInactiveActionButton customer={customer}/>
                             </TableCell>
                         </TableRow>
                     ))}
