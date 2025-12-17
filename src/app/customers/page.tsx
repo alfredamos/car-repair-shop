@@ -2,9 +2,12 @@ import {getAllCustomers} from "@/app/actions/customer.action";
 import {CustomError} from "@/utils/customError.util";
 import CustomerTable from "@/app/customers/CustomerTable";
 
-export default async function AllCustomersPage(){
+export default async function AllCustomersPage({searchParams}:{searchParams: Promise<{query?: string}>}){
+    //----> Get the search params, if there are any.
+    const {query} = await searchParams;
+
     //----> Fetch all customers.
-    const response = await getAllCustomers();
+    const response = await getAllCustomers(query);
 
     //----> Check for error.
     if (response instanceof CustomError) {

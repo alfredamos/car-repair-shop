@@ -146,7 +146,7 @@ export async function getCustomerByTicket(ticket: Ticket) {
     }
 }
 
-export async function getAllCustomers() {
+export async function getAllCustomers(query?: string) {
     try {
         const {isAdminOrManager} = await adminOrManagerOrOwnerCheckAndUserSession();
 
@@ -156,8 +156,23 @@ export async function getAllCustomers() {
         }
 
         //----> Fetch all customers.
-        return await prisma.customer.findMany({})
-    }catch (error) {
+        //----> Get authors marching the giving query.
+        if(query){
+            return prisma.customer.findMany({where: {
+                    OR:[
+                        {address : {contains : query}},
+                        {email : {contains : query}},
+                        {name : {contains : query}},
+                        {phone : {contains : query}},
+                    ],}
+            });
+        }
+
+        //----> Fetch all authors.
+        return prisma.customer.findMany({});
+    }
+       // return await prisma.customer.findMany({})
+    catch (error) {
         return makeCustomError(error);
     }
 }

@@ -13,6 +13,7 @@ import {Button} from "@/components/ui/button";
 import Link from "next/link";
 import {DeleteCustomerButton} from "@/app/customers/DeleteCustomerButton";
 import {ActiveOrInactiveActionButton} from "@/app/customers/ActiveOrInactiveActionButton";
+import SearchCustomers from "@/app/customers/SearchCustomers";
 
 type Props = {
     customers: Customer[]
@@ -32,6 +33,7 @@ export default function CustomerTable({ customers }: Props) {
                     <Link href="/customers/add">Add</Link>
                 </Button>
             </div>
+            <SearchCustomers path="/customers" />
             <Table className="mt-5">
                 <TableCaption>A list of Car-repair-shop customers.</TableCaption>
                 <TableHeader>
