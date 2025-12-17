@@ -155,7 +155,6 @@ export async function getAllCustomers(query?: string) {
             throw catchError(StatusCodes.FORBIDDEN, "You don't have the permission to view this page!");
         }
 
-        //----> Fetch all customers.
         //----> Get authors marching the giving query.
         if(query){
             return prisma.customer.findMany({where: {
@@ -170,9 +169,7 @@ export async function getAllCustomers(query?: string) {
 
         //----> Fetch all authors.
         return prisma.customer.findMany({});
-    }
-       // return await prisma.customer.findMany({})
-    catch (error) {
+    } catch (error) {
         return makeCustomError(error);
     }
 }

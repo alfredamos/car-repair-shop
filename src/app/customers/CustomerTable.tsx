@@ -14,6 +14,7 @@ import Link from "next/link";
 import {DeleteCustomerButton} from "@/app/customers/DeleteCustomerButton";
 import {ActiveOrInactiveActionButton} from "@/app/customers/ActiveOrInactiveActionButton";
 import SearchCustomers from "@/app/customers/SearchCustomers";
+import {Separator} from "@/components/ui/separator";
 
 type Props = {
     customers: Customer[]
@@ -27,13 +28,16 @@ export default function CustomerTable({ customers }: Props) {
 
     return (
         <div className="mt-10 max-w-sm md:max-w-2xl mx-auto">
+            <Separator className="mb-4 mt-2"/>
             <div className="flex items-center justify-between">
-                <span>Add New Customer</span>
-                <Button asChild size="lg" className="font-bold">
-                    <Link href="/customers/add">Add</Link>
+                <span className="font-bold">Add New Customer</span>
+                <Button asChild size="lg" >
+                    <Link href="/customers/add" className="font-bold">Add</Link>
                 </Button>
             </div>
+            <Separator className="mb-2 mt-4"/>
             <SearchCustomers path="/customers" />
+            <Separator className="mb-2 mt-2"/>
             <Table className="mt-5">
                 <TableCaption>A list of Car-repair-shop customers.</TableCaption>
                 <TableHeader>

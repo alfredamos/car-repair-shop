@@ -101,7 +101,7 @@ export async function getTicketById(id: string) {
     }
 }
 
-export async function getAllTickets() {
+export async function getAllTickets(query?: string) {
     try {
         const {isAdminOrManager} = await adminOrManagerOrOwnerCheckAndUserSession();
 
@@ -110,8 +110,18 @@ export async function getAllTickets() {
             throw catchError(StatusCodes.FORBIDDEN, "You don't have the permission to view this page!");
         }
 
-        //----> Fetch all tickets.
-        return await prisma.ticket.findMany({})
+        //----> Get authors marching the giving query.
+        if(query){
+            return prisma.ticket.findMany({where: {
+                    OR:[
+                        {title : {contains : query}},
+                        {tech : {contains : query}},
+                    ],}
+            });
+        }
+
+        //----> Fetch all authors.
+        return prisma.ticket.findMany({});
     }catch (error) {
         return makeCustomError(error);
     }

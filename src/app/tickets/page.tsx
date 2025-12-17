@@ -2,9 +2,12 @@ import {getAllTickets} from "@/app/actions/ticket.action";
 import {CustomError} from "@/utils/customError.util";
 import TicketTable from "@/app/tickets/TicketTable";
 
-export default async function AllTicketsPage(){
+export default async function AllTicketsPage({searchParams}:{searchParams: Promise<{query?: string}>}){
+    //----> Get the search params, if there are any.
+    const {query} = await searchParams;
+
     //----> Fetch all tickets.
-    const responseTickets = await getAllTickets();
+    const responseTickets = await getAllTickets(query);
 
     //----> Check for error.
     if (responseTickets instanceof CustomError) {

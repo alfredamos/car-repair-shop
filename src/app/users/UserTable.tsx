@@ -12,6 +12,8 @@ import Link from "next/link";
 import {UserResponse} from "@/app/types/type";
 import {DeleteUserButton} from "@/app/users/DeleteUserButton";
 import {ChangeUserRoleActionButton} from "@/app/users/ChangeUserRoleActionButton";
+import {Separator} from "@/components/ui/separator";
+import SearchCustomers from "@/app/customers/SearchCustomers";
 
 type Props = {
     users: UserResponse[]
@@ -25,12 +27,16 @@ export default function UserTable({ users }: Props) {
 
     return (
         <div className="mt-10 max-w-sm md:max-w-2xl mx-auto">
+            <Separator className="mb-4 mt-2"/>
             <div className="flex items-center justify-between">
-                <span>Add New User</span>
-                <Button asChild size="lg" className="font-bold">
-                    <Link href="/signup">Add</Link>
+                <span className="font-bold">Add New User</span>
+                <Button asChild size="lg" >
+                    <Link href="/signup" className="font-bold">Add</Link>
                 </Button>
             </div>
+            <Separator className="mb-2 mt-4"/>
+            <SearchCustomers path="/users" />
+            <Separator className="mb-2 mt-2"/>
             <Table className="mt-5">
                 <TableCaption>A list of Car-repair-shop users.</TableCaption>
                 <TableHeader>

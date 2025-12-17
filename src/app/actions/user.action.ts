@@ -8,6 +8,7 @@ import {prisma} from "@/app/db/prisma.db";
 import {ResponseMessage} from "@/utils/responseMessage.util";
 import {fromUserToUserResponse} from "@/app/actions/auth-helpers";
 import {adminOrManagerOrOwnerCheckAndUserSession} from "@/app/actions/auth.action";
+import {UserResponse} from "@/app/types/type";
 
 export async function deleteUserById(id: string){
     try{
@@ -51,7 +52,7 @@ export async function getUserById(id: string){
     }
 }
 
-export async function getAllUsers(){
+export async function getAllUsers(query?: string){
     try{
         const {isAdmin} = await adminOrManagerOrOwnerCheckAndUserSession();
 
@@ -61,7 +62,19 @@ export async function getAllUsers(){
         }
 
         //----> Fetch all users.
-        return ((await prisma.user.findMany({})).map(user => fromUserToUserResponse(user)))
+        //----> Get authors marching the giving query.
+        if(query){
+            return ((await prisma.user.findMany({where: {
+                    OR:[
+                        {email : {contains : query}},
+                        {name : {contains : query}},
+                        {phone : {contains : query}},
+                    ],}
+            })).map(user => fromUserToUserResponse(user)));
+        }
+
+        //----> Fetch all authors.
+        return ((await prisma.user.findMany({})).map(user => fromUserToUserResponse(user)));
     }catch (error){
         return makeCustomError(error);
     }

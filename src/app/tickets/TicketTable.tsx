@@ -14,6 +14,9 @@ import {CustomerName} from "@/app/tickets/CustomerName";
 import TicketNoteContent from "@/app/tickets/TicketNoteContent";
 import {CompleteActionButton} from "@/app/tickets/job-completed/CompleteActionButton";
 import {DeleteTicketButton} from "@/app/tickets/DeleteTicketButton";
+import {Separator} from "@/components/ui/separator";
+import SearchCustomers from "@/app/customers/SearchCustomers";
+import SearchTickets from "@/app/tickets/SearchTickets";
 
 type Props = {
     tickets: Ticket[];
@@ -27,12 +30,16 @@ export default function TicketTable({ tickets}: Props) {
 
     return (
         <div className="mt-10 max-w-sm md:max-w-2xl mx-auto">
+            <Separator className="mb-4 mt-2"/>
             <div className="flex items-center justify-between">
-                <span>Add New Ticket</span>
-                <Button asChild size="lg" className="font-bold">
-                    <Link href="/tickets/add">Add</Link>
+                <span className="font-bold">Add New Ticket</span>
+                <Button asChild size="lg" >
+                    <Link href="/tickets/add" className="font-bold">Add</Link>
                 </Button>
             </div>
+            <Separator className="mb-2 mt-4"/>
+            <SearchTickets path="/tickets" />
+            <Separator className="mb-2 mt-2"/>
             <Table className="mt-5">
                 <TableCaption>A list of Car-repair-shop tickets.</TableCaption>
                 <TableHeader>
