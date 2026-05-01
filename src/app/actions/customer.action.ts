@@ -7,7 +7,6 @@ import {StatusCodes} from "http-status-codes";
 import catchError from "http-errors";
 import {getOneCustomer} from "@/app/actions/customer-helper";
 import {adminOrManagerOrOwnerCheckAndUserSession} from "@/app/actions/auth.action";
-import {TicketQueryCondition} from "@/utils/TicketQueryCondition";
 import {CustomerQueryCondition} from "@/app/types/type";
 
 export async function activateOrDeactivateCustomer(id: string){

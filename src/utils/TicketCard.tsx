@@ -1,7 +1,7 @@
 import {Button} from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import Link from "next/link";
-import {Customer, Role, Ticket} from "@prisma/client";
+import {Customer, Ticket} from "@prisma/client";
 import {UserResponse} from "@/app/types/type";
 import {Check, X} from "lucide-react";
 

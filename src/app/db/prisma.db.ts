@@ -1,5 +1,14 @@
 // lib/prisma.ts
-import { PrismaClient } from '@prisma/client';
+import "dotenv/config";
+import { PrismaMariaDb } from "@prisma/adapter-mariadb";
+import { PrismaClient } from "@prisma/client";
+
+const adapter = new PrismaMariaDb({
+  // Use specific connection details if you prefer, or the URL
+  url: process.env.DATABASE_URL,
+});
+
+
 
 const globalForPrisma = global as unknown as {
     prisma: PrismaClient | undefined;
@@ -8,6 +17,7 @@ const globalForPrisma = global as unknown as {
 export const prisma =
     globalForPrisma.prisma ??
     new PrismaClient({
+        adapter
         //log: ['query'], // Optional: log database queries
     });
 

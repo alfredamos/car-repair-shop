@@ -2,14 +2,10 @@
 import {
     NavigationMenu,
     NavigationMenuItem,
-    NavigationMenuLink,
     NavigationMenuList,
-    navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
 import SignInAndOut from "@/components/SignInAndOut";
 import {Button} from "@/components/ui/button";
-import {MenuDropdown} from "@/components/MenuDropdown";
-import {adminItems} from "@/utils/adminItems";
 import Link from "next/link";
 
 export function NavBar() {

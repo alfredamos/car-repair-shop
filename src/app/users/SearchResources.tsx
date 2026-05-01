@@ -5,7 +5,7 @@ type Prop = {
     path: string;
 }
 
-export default function SearchUsers({path}: Prop) {
+export default function SearchResources({path}: Prop) {
     return (
         <Form action={path}>
             <div className="flex justify-between items-center mb-5 mt-5 w-3/4 mx-auto">

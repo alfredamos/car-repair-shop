@@ -15,7 +15,6 @@ import TicketNoteContent from "@/app/tickets/TicketNoteContent";
 import {CompleteActionButton} from "@/app/tickets/job-completed/CompleteActionButton";
 import {DeleteTicketButton} from "@/app/tickets/DeleteTicketButton";
 import {Separator} from "@/components/ui/separator";
-import SearchCustomers from "@/app/customers/SearchCustomers";
 import SearchTickets from "@/app/tickets/SearchTickets";
 
 type Props = {

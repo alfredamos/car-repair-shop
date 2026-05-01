@@ -29,7 +29,6 @@ import {findTokenByAccessToken, revokedTokensByUserId} from "@/app/actions/token
 import {makeCustomError} from "@/utils/makeCustomError";
 import {Role, User} from "@prisma/client";
 import {redirect} from "next/navigation";
-import {CustomError} from "@/utils/customError.util";
 
 export async function changeUserPassword(changeUserPassword: ChangeUserPassword){
     //----> Destructure change-user-password payload.

@@ -1,5 +1,5 @@
 import {Ticket} from "@prisma/client";
-import {getCustomerById, getCustomerByTicket} from "@/app/actions/customer.action";
+import {getCustomerByTicket} from "@/app/actions/customer.action";
 import {CustomError} from "@/utils/customError.util";
 import {TableCell} from "@/components/ui/table";
 

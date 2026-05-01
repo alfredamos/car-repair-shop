@@ -1,5 +1,3 @@
-import {Role} from "@prisma/client";
-
 export type NavLinkType = {
     href: string;
     label: string;
